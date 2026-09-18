@@ -117,7 +117,7 @@
   function bindHref() {
     $$("[data-href]").forEach(function (el) {
       var url = CONFIG.social && CONFIG.social[el.getAttribute("data-href")];
-      if (url) {
+      if (url && /^(https?:)?\/\//i.test(url)) {
         el.href = url;
         el.target = "_blank";
         el.rel = "noopener";
@@ -283,7 +283,7 @@
   function renderGaleria() {
     var host = $("#rad-galeria");
     if (!host) return;
-    var slots = ["v1", "a", "b", "c", "v2", "d", "e"];
+    var slots = ["v1", "a", "b", "c", "v2", "d", "e", "f"];
     host.innerHTML = (DATA.galeria || [])
       .map(function (name, i) {
         var pos = slots[i] || "a";
@@ -377,23 +377,28 @@
     var host = $("#rad-inspi");
     if (!host) return;
     host.innerHTML = ((DATA.inspiracion && DATA.inspiracion.cases) || [])
-      .map(function (c) {
+      .map(function (c, i) {
+        var num = ("0" + (i + 1)).slice(-2);
+        var altA = [c.name, c.labelA].filter(function (x) { return x; }).join(" — ");
+        var altB = [c.name, c.labelB].filter(function (x) { return x; }).join(" — ");
         return (
           '<article class="inspi-card">' +
+            '<span class="inspi-num">' + num + "</span>" +
             '<div class="inspi-pair">' +
-              '<figure class="inspi-fig">' + media(c.imgA, c.name + " — " + c.labelA) +
+              '<figure class="inspi-fig">' + media(c.imgA, altA) +
                 "<figcaption>" + esc(c.labelA) + "</figcaption></figure>" +
-              '<figure class="inspi-fig">' + media(c.imgB, c.name + " — " + c.labelB) +
+              '<figure class="inspi-fig">' + media(c.imgB, altB) +
                 "<figcaption>" + esc(c.labelB) + "</figcaption></figure>" +
             "</div>" +
             '<div class="inspi-body">' +
-              '<h4 class="inspi-name">' + esc(c.name) + "</h4>" +
-              '<p class="inspi-tag">' + esc(c.tag) + "</p>" +
+              (c.name ? '<h4 class="inspi-name">' + esc(c.name) + "</h4>" : "") +
+              (c.tag ? '<p class="inspi-tag">' + esc(c.tag) + "</p>" : "") +
             "</div>" +
           "</article>"
         );
       })
       .join("");
+    wireMediaLightbox(host);
   }
 
   /* --------------------------- DISEÑO DE INTERIORES --------------------------- */
@@ -423,11 +428,18 @@
     if (pics) {
       pics.innerHTML = concepts
         .map(function (c) {
-          return '<figure class="conf-fig">' + media(c.img, c.t) + "</figure>";
+          return (
+            '<figure class="conf-fig">' +
+              media(c.img, c.t) +
+              '<figcaption><strong class="conf-fig__t">' + esc(c.t) + "</strong>" +
+              (c.d ? '<span class="conf-fig__d">' + esc(c.d) + "</span>" : "") +
+              "</figcaption>" +
+            "</figure>"
+          );
         })
         .join("");
     }
-
+    wireMediaLightbox(pics);
   }
 
   /* ------------------------------ COMPRAR ------------------------------ */
@@ -547,9 +559,13 @@
         var btn = e.target.closest ? e.target.closest(".file-list__remove") : null;
         if (!btn) return;
         files.splice(Number(btn.getAttribute("data-i")), 1);
-        var dt = new DataTransfer();
-        files.forEach(function (f) { dt.items.add(f); });
-        input.files = dt.files;
+        if (typeof DataTransfer !== "undefined") {
+          var dt = new DataTransfer();
+          files.forEach(function (f) { dt.items.add(f); });
+          input.files = dt.files;
+        } else {
+          input.value = "";
+        }
         input.dispatchEvent(new Event("change"));
       });
     }
@@ -612,9 +628,12 @@
           .join("");
         var extrasRow = extras ? '<div class="p-card__extras">' + extras + "</div>" : "";
         var meta = p.type ? '<p class="p-card__meta">' + esc(p.type) + "</p>" : "";
+        var num = (p.code || "").replace(/\D+/g, "");
         return (
           '<article class="p-card">' +
-            '<figure class="p-card__media">' + media(p.img, p.name) + "</figure>" +
+            '<figure class="p-card__media" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ver detalle del proyecto" aria-expanded="false">' + media(p.img, p.name) +
+              (num ? '<span class="p-card__num">' + esc(num) + "</span>" : "") +
+            "</figure>" +
             '<div class="p-card__body">' +
               '<p class="p-card__code">' + esc(p.code) + "</p>" +
               '<h3 class="p-card__name">' + esc(p.name) + "</h3>" +
@@ -626,6 +645,111 @@
         );
       })
       .join("");
+    if (!host.getAttribute("data-lb")) {
+      host.setAttribute("data-lb", "1");
+      host.addEventListener("click", function (ev) {
+        var fig = ev.target.closest && ev.target.closest(".p-card__media");
+        if (!fig) return;
+        var card = fig.closest(".p-card");
+        var idx = Array.prototype.indexOf.call(host.children, card);
+        var p = (DATA.projectsList || [])[idx];
+        if (p) openLightbox(p);
+      });
+      host.addEventListener("keydown", function (ev) {
+        if ((ev.key === "Enter" || ev.key === " ") && ev.target.classList.contains("p-card__media")) {
+          ev.preventDefault();
+          ev.target.click();
+        }
+      });
+    }
+  }
+
+  function openLightbox(p) {
+    var lb = $("#lightbox");
+    if (lb && !lb.getAttribute("data-bound")) {
+      lb.setAttribute("data-bound", "1");
+      lb.setAttribute("role", "dialog");
+      lb.setAttribute("aria-modal", "true");
+      lb.addEventListener("click", function (ev) {
+        if (ev.target === lb || ev.target.closest(".lightbox__close")) closeLightbox();
+      });
+      document.addEventListener("keydown", function (ev) {
+        if (ev.key === "Escape" && lb.classList.contains("is-open")) closeLightbox();
+      });
+    }
+    if (!lb) {
+      lb = document.createElement("div");
+      lb.className = "lightbox";
+      lb.id = "lightbox";
+      document.body.appendChild(lb);
+      openLightbox(p);
+      return;
+    }
+    lb.setAttribute("aria-label", p.name || "Proyecto");
+    lb.innerHTML =
+      '<button class="lightbox__close" type="button" aria-label="Cerrar">×</button>' +
+      '<figure class="lightbox__card">' +
+        (p.code ? '<p class="lightbox__code">' + esc(p.code) + "</p>" : "") +
+        '<span class="lightbox__media">' + media(p.img, p.name) + "</span>" +
+        "<figcaption>" +
+          (p.name ? '<h3 class="lightbox__name">' + esc(p.name) + "</h3>" : "") +
+          (p.desc ? '<p class="lightbox__desc">' + esc(p.desc) + "</p>" : "") +
+        "</figcaption>" +
+      "</figure>";
+    document.body.classList.add("no-scroll");
+    attachPics(lb);
+    requestAnimationFrame(function () { lb.classList.add("is-open"); });
+  }
+
+  function closeLightbox() {
+    var lb = $("#lightbox");
+    if (!lb) return;
+    lb.classList.remove("is-open");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function wireMediaLightbox(host) {
+    if (!host || host.getAttribute("data-lb")) return;
+    host.setAttribute("data-lb", "1");
+    host.addEventListener("click", function (ev) {
+      var mediaEl = ev.target.closest && ev.target.closest(".media");
+      if (!mediaEl) return;
+      var img = mediaEl.querySelector("img");
+      if (img && img.getAttribute("src")) {
+        openMediaLightbox(img.getAttribute("src"), img.getAttribute("alt") || "");
+      }
+    });
+  }
+
+  function openMediaLightbox(src, alt) {
+    var lb = $("#media-lightbox");
+    if (!lb) return;
+    var img = lb.querySelector(".media-lightbox__img");
+    var cap = lb.querySelector(".media-lightbox__alt");
+    if (img) { img.src = src; img.alt = alt || ""; }
+    if (cap) cap.textContent = alt || "";
+    lb.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    requestAnimationFrame(function () { lb.classList.add("is-open"); });
+  }
+
+  function closeMediaLightbox() {
+    var lb = $("#media-lightbox");
+    if (!lb) return;
+    lb.classList.remove("is-open");
+    lb.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function setupMediaLightbox() {
+    var lb = $("#media-lightbox");
+    if (!lb) return;
+    lb.addEventListener("click", function (ev) {
+      if (ev.target === lb || ev.target.closest(".lightbox__close")) closeMediaLightbox();
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && lb.classList.contains("is-open")) closeMediaLightbox();
+    });
   }
 
   /* ------------------------------- SOBRE ------------------------------- */
@@ -745,7 +869,7 @@
     toggle.addEventListener("click", function () { setOpen(true); });
     if (close) close.addEventListener("click", function () { setOpen(false); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape" && !overlay.hidden) setOpen(false);
     });
     $$("a", overlay).forEach(function (a) {
       a.addEventListener("click", function () { setOpen(false); });
@@ -812,6 +936,7 @@
     setupHeader();
     setupMenu();
     setupParallax();
+    setupMediaLightbox();
   }
 
   if (document.readyState === "loading") {

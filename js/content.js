@@ -54,6 +54,7 @@ window.SITE_CONTENT = {
     comprar: "Hola Valeria, estoy por comprar una casa y quisiera una revisión profesional de la propiedad.",
     confort: "Hola Valeria, quiero mejorar el confort de mi casa y quisiera asesoramiento.",
     consulta: "Hola Valeria, no sé qué necesita mi casa pero quiero mejorarla. Quisiera una consulta online.",
+    profesionales: "Hola Valeria, soy arquitecto/a y quiero consultar por los servicios para profesionales.",
   },
 
   /* ---------- Franja de categorías (navegación secundaria) ---------- */
@@ -91,7 +92,7 @@ window.SITE_CONTENT = {
   ],
 
   /* ---------- Galería de 7 imágenes de la sección ---------- */
-  galeria: ["galeria-1", "galeria-2", "galeria-3", "galeria-4", "galeria-5", "galeria-6", "galeria-7"],
+  galeria: ["galeria-1", "galeria-2", "galeria-3", "galeria-4", "galeria-5", "galeria-6", "galeria-7", "galeria-8"],
 
   /* ---------- 5. ¿QUÉ NECESITA TU CASA? ---------- */
   queNecesita: {
@@ -128,7 +129,7 @@ window.SITE_CONTENT = {
         situation: "Estoy por comprar una casa",
         solution: "Quiero saber si conviene, qué se puede modificar y qué inversión puede requerir.",
         href: "#antes-de-comprar",
-        img: "comprar",
+        img: "comprar-carta",
         topics: ["Estado general de la propiedad", "Humedades y filtraciones", "Instalaciones", "Potencial de transformación"],
       },
       {
@@ -168,7 +169,7 @@ window.SITE_CONTENT = {
       "Mantenimiento", "Quiero ampliar", "Remodelaciones", "Quiero mejorar un ambiente",
       "No sé qué tiene mi casa",
     ],
-    photos: ["consulta-1", "consulta-2", "consulta-3"],
+    photos: ["consulta-1", "consulta-2", "consulta-3", "consulta-4"],
     whatTitle: "¿Esto es para mí? → ¿Qué voy a recibir?",
     whatIntro: "Me contás, analizamos, te oriento...",
     informe: {
@@ -264,6 +265,12 @@ window.SITE_CONTENT = {
         imgA: "garage-antes", imgB: "garage-despues",
         labelA: "Antes", labelB: "Después",
       },
+      {
+        name: "",
+        tag: "",
+        imgA: "cocina-antes", imgB: "cocina-despues",
+        labelA: "Antes", labelB: "Después",
+      },
     ],
   },
 
@@ -352,7 +359,6 @@ window.SITE_CONTENT = {
       code: "Proyecto 04",
       name: "Diagnóstico técnico y plan de intervención de la vivienda",
       img: "diagnostico",
-      imgs: ["diagnostico-doc"],
       desc: "Un informe de patologías no es solo detectar humedades, fisuras o problemas constructivos. Es entender su origen, evaluar su alcance y definir cómo intervenir correctamente. Este tipo de relevamiento permite al propietario contar con una mirada profesional sobre el estado de su vivienda, planificar las reparaciones y tener criterios claros para solicitar presupuestos y controlar la ejecución de los trabajos. Diagnosticar antes de intervenir es la clave para evitar soluciones improvisadas y reparaciones que solo resuelven el problema de manera superficial.",
     },
     {

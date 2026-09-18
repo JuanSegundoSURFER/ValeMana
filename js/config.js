@@ -54,9 +54,9 @@ window.SITE_CONFIG = {
   images: {
     logo: "logo",
     hero: "hero",
-    informativa: "informativa",
+    informativa: "informativa.png",
     retrato: "retrato",
-    vivienda: "vivienda",
+    vivienda: "vivienda.png",
     comprarFoto: "comprar",
   },
 };
