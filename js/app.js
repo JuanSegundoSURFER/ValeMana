@@ -188,6 +188,30 @@
       .join("");
   }
 
+  /* ------------------------- HERO: CÓMO FUNCIONA ------------------------- */
+
+  function renderHeroHow() {
+    var host = $("#rad-hero-how");
+    if (!host) return;
+    var h = DATA.hero && DATA.hero.how;
+    if (!h) return;
+    host.innerHTML =
+      '<h3 class="hero__how-title">' + esc(h.title) + "</h3>" +
+      '<ol class="hero__how-list">' +
+        (h.steps || [])
+          .map(function (s) {
+            return (
+              "<li>" +
+                '<span class="hero__how-n">' + esc(s.n) + "</span>" +
+                '<p class="hero__how-text"><strong>' + esc(s.lead) + "</strong>; " + esc(s.text) + "</p>" +
+              "</li>"
+            );
+          })
+          .join("") +
+      "</ol>" +
+      (h.note ? '<p class="hero__how-note">' + esc(h.note) + "</p>" : "");
+  }
+
   /* ------------------------- FRANJA DE SERVICIOS ------------------------- */
 
   function renderSvcRail() {
@@ -606,6 +630,31 @@
 
   /* ------------------------------- SOBRE ------------------------------- */
 
+  function renderInspiCta() {
+    var host = $("#rad-inspi-cta");
+    if (!host) return;
+
+    if (host.querySelector(".inspi-cta__note") || host.querySelector(".inspi-cta__notes")) {
+      return;
+    }
+
+    var rm = DATA.remodelaciones || {};
+    var paragraphs = (rm.note || "")
+      .split(/\n+/)
+      .filter(function (s) { return s.trim(); })
+      .map(function (p) { return '<p class="inspi-cta__note">' + esc(p) + "</p>"; })
+      .join("");
+    host.innerHTML =
+      '<div class="inspi-cta__pair">' +
+        '<a class="btn btn--accent btn--lg" data-wa="remodelaciones">' +
+          esc(rm.cta || "Empezar por una consulta") +
+          ' <span class="btn__arr" aria-hidden="true">→</span>' +
+        "</a>" +
+        '<div class="inspi-cta__notes">' + paragraphs + "</div>" +
+      "</div>" +
+      '<div class="response" data-response></div>';
+  }
+
   function renderAbout() {
     var host = $("#rad-how");
     if (!host) return;
@@ -613,7 +662,6 @@
       .map(function (h) {
         return (
           "<li>" +
-            "<span>" + esc(h.n) + "</span>" +
             "<strong>" + esc(h.t) + "</strong>" +
             "<em>" + esc(h.d) + "</em>" +
           "</li>"
@@ -646,8 +694,8 @@
     var targets = $$(
       ".section__head, .hero__inner, .accesos, .hero__band, " +
       ".online__steps, .tools, .recibe, .online__cta, .consult, .consultas, .what-block, " +
-      ".cmp-grid, .inspi-grid, .di-row, .conf-photos, .pre__row, .projects-grid, .about, " +
-      ".ig, .final__actions, .response, .deliver, .needs-grid, .galeria7, .online__photos"
+      ".cmp-grid, .inspi-grid, .inspi-cta, .di-row, .conf-photos, .pre__row, .projects-grid, .about, " +
+      ".ig, .final__actions, .response, .deliver, .needs-grid, .galeria7, .online__photos, .hero__how"
     );
     targets.forEach(function (el) { el.classList.add("r"); });
 
@@ -731,6 +779,7 @@
 
   function init() {
     renderMarquee();
+    renderHeroHow();
     renderSvcRail();
     renderAccesos();
     renderNeeds();
@@ -738,6 +787,7 @@
     renderConsultaOnline();
     renderRemodel();
     renderInspiracion();
+    renderInspiCta();
     renderInteriores();
     renderBienestar();
     renderComprar();

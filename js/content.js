@@ -10,7 +10,7 @@ window.SITE_CONTENT = {
 
   /* ---------- 1. HERO / PRIMERA PANTALLA ---------- */
   hero: {
-    eyebrow: "Valeria A. Martín · VAM Arquitectura",
+    eyebrow: "Asesoramiento y proyectos de arquitectura online, con atención personalizada",
     title: "Tu casa, sana, cómoda y bien pensada",
     titleTop: "Tu casa, sana,",
     titleMid: "cómoda y bien",
@@ -18,6 +18,16 @@ window.SITE_CONTENT = {
     line1: "Decisiones claras para mejorar, reformar o transformar tu casa.",
     line2: "La comodidad de hacerlo online, pero sin perder el trato humano del arquitecto.",
     line3: "Elegí tu situación y te digo cómo podemos trabajarla.",
+    how: {
+      title: "¿Cómo funciona?",
+      steps: [
+        { n: "1", lead: "Contanos qué necesitás", text: "Elegís tu situación y nos escribís por WhatsApp." },
+        { n: "2", lead: "Compartís la información", text: "Fotos, videos, planos, medidas y todo lo que tengas disponible." },
+        { n: "3", lead: "Analizamos tu caso", text: "Un arquitecto revisa la información y define cómo podemos ayudarte." },
+        { n: "4", lead: "Recibís tu propuesta", text: "Te indicamos el servicio, alcance, honorarios y próximos pasos." },
+      ],
+      note: "Todo online. Atención personalizada. Sin bots.",
+    },
   },
 
   /* Bloque de confianza del hero */
@@ -213,7 +223,8 @@ window.SITE_CONTENT = {
         ],
       },
     ],
-    note: "Este servicio se realiza 100% online. La precisión de la propuesta estará sujeta a la información proporcionada por el cliente (fotos, videos, plano y/o medidas).",
+    cta: "Empezar por una consulta",
+    note: "El proyecto se desarrolla a distancia a partir de la información proporcionada por el cliente. No incluye relevamiento presencial ni dirección de obra. Cuando la intervención requiere trámites, firma profesional, relevamiento presencial o dirección de obra, se evalúa en cada caso la modalidad de trabajo correspondiente.",
   },
 
   /* ---------- 10. INSPIRACIÓN — TRANSFORMACIONES REALES ---------- */
@@ -285,7 +296,7 @@ window.SITE_CONTENT = {
       { t: "Sensación de amplitud", d: "Espacios que respiran, maximizan los volúmenes", img: "amplitud" },
       { t: "Feng Shui", d: "Armonía y equilibrio.", img: "feng-shui" },
     ],
-    quote: "No diseñamos solo metros cuadrados; creamos entornos que estimulan tu mente, equilibran tus emociones y transforman la forma en que vivís.",
+    quote: "No es solo como se ve: es como se vive.",
     cta: "Quiero un espacio que se sienta bien",
   },
 
@@ -364,10 +375,10 @@ window.SITE_CONTENT = {
     title: "Arquitectura con atención a las personas",
     para: "Te explico claro, sin tecnicismos, y te acompaño en cada paso.",
     how: [
-      { n: "01", t: "Te escucho", d: "Qué necesitás y cómo vivís." },
-      { n: "02", t: "Analizo", d: "Veo la casa y la entiendo." },
-      { n: "03", t: "Te propongo", d: "Opciones con costos y tiempos." },
-      { n: "04", t: "Te acompaño", d: "De la idea a la obra." },
+      { t: "Te escucho", d: "Entiendo qué necesitás y cómo vivís tu casa." },
+      { t: "Analizo", d: "Estudio el espacio, sus posibilidades y sus limitaciones." },
+      { t: "Te propongo", d: "Alternativas claras para que puedas decidir." },
+      { t: "Te acompaño", d: "De la primera idea al proyecto y, cuando corresponda, a la obra." },
     ],
   },
 
