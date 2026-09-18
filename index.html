@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valeria Martín — Arquitecta | Casas que funcionan bien</title>
-  <meta name="description" content="Arquitectura para tu casa: humedades, remodelaciones, diseño de interiores y asesoramiento antes de comprar. Presencial y online.">
+  <title>Valeria A. Martín — Arquitecta | Casas que funcionan bien</title>
+  <meta name="description" content="Decisiones claras para mejorar, reformar o transformar tu casa. Online, con el trato humano de un arquitecto. Córdoba, Argentina.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Valeria Martín — Arquitecta | Casas que funcionan bien">
-  <meta property="og:description" content="Arquitectura para tu casa: humedades, remodelaciones, diseño de interiores y asesoramiento antes de comprar.">
+  <meta property="og:title" content="Valeria A. Martín — Arquitecta | Casas que funcionan bien">
+  <meta property="og:description" content="Decisiones claras para mejorar, reformar o transformar tu casa. Online, con el trato humano de un arquitecto.">
   <meta property="og:url" content="">
-  <meta property="og:image" content="assets/images/ph-hero.svg">
+  <meta property="og:image" content="assets/images/hero.jpg">
   <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,15 +28,13 @@
   <!-- ======================= HEADER ======================= -->
   <header class="site-header" id="siteHeader">
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="Valeria Martín — inicio">
+      <a class="brand" href="#inicio" aria-label="Valeria A. Martín — inicio">
         <img class="brand__logo" src="assets/images/logo.jpg" alt="" width="36" height="36">
-        <span class="brand__text" data-text="owner.brand">Valeria Martín</span>
+        <span class="brand__text" data-text="owner.brand">Valeria A. Martín</span>
       </a>
 
       <nav class="nav__links" aria-label="Principal">
         <ul>
-          <li><a href="#mejorar-casa">Quiero mejorar mi casa</a></li>
-          <li><a href="#servicios">Servicios</a></li>
           <li><a href="#proyectos">Proyectos</a></li>
           <li><a href="#sobre-mi">Sobre Valeria</a></li>
           <li><a href="#contacto">Contacto</a></li>
@@ -57,17 +55,15 @@
     <div class="menu-overlay__top">
       <a class="brand" href="#inicio">
         <img class="brand__logo" src="assets/images/logo.jpg" alt="" width="36" height="36">
-        <span class="brand__text">Valeria Martín</span>
+        <span class="brand__text">Valeria A. Martín</span>
       </a>
       <button class="menu-overlay__close" id="menuClose" type="button" aria-label="Cerrar menú">×</button>
     </div>
     <nav aria-label="Menú">
       <ul class="menu-overlay__links">
-        <li><a href="#mejorar-casa"><span>01</span>Quiero mejorar mi casa</a></li>
-        <li><a href="#servicios"><span>02</span>Servicios</a></li>
-        <li><a href="#proyectos"><span>03</span>Proyectos</a></li>
-        <li><a href="#sobre-mi"><span>04</span>Sobre Valeria</a></li>
-        <li><a href="#contacto"><span>05</span>Contacto</a></li>
+        <li><a href="#proyectos"><span>01</span>Proyectos</a></li>
+        <li><a href="#sobre-mi"><span>02</span>Sobre Valeria</a></li>
+        <li><a href="#contacto"><span>03</span>Contacto</a></li>
       </ul>
     </nav>
     <div class="menu-overlay__foot">
@@ -80,25 +76,35 @@
 
     <!-- ======================= HERO ======================= -->
     <section class="hero" id="inicio">
-      <picture class="hero__backdrop">
-        <source media="(max-width: 720px)" srcset="assets/images/ph-hero.svg">
-        <img class="hero__img" id="heroImg" data-pic="hero" src="assets/images/ph-hero.svg" alt="Estudio de arquitectura para casas — Valeria Martín" data-parallax>
-      </picture>
+      <img class="hero__img" id="heroImg" data-pic="hero" src="assets/images/hero.jpg" alt="Arquitectura para casas — VAM Arquitectura">
       <div class="hero__scrim" aria-hidden="true"></div>
 
       <div class="container hero__inner">
-        <p class="hero__eyebrow">Valeria Martín · Arquitectura</p>
-        <h1 class="hero__title">Tu casa, sana, cómoda y <em>bien pensada</em></h1>
-        <p class="hero__sub">De una humedad a una remodelación completa: escucho qué te pasa, entiendo tu casa y la transformamos.</p>
+        <p class="hero__eyebrow" data-text="hero.eyebrow">Valeria A. Martín · VAM Arquitectura</p>
 
-        <div class="hero__cta-row">
-          <a class="btn btn--accent btn--lg" data-wa="general">Hablar por WhatsApp <span class="btn__arr" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost btn--lg" href="#mejorar-casa">Quiero mejorar mi casa <span class="btn__arr" aria-hidden="true">↓</span></a>
-          <a class="btn btn--line-accent btn--lg" href="#servicios">Ver los servicios <span class="btn__arr" aria-hidden="true">↓</span></a>
+        <h1 class="hero__title">
+          <span data-text="hero.titleTop">Tu casa, sana,</span>
+          <span class="hero__title-mid" data-text="hero.titleMid">cómoda y bien</span>
+          <em data-text="hero.titleEnd">pensada</em>
+        </h1>
+
+        <div class="hero__lines">
+          <p data-text="hero.line1">Decisiones claras para mejorar, reformar o transformar tu casa.</p>
+          <p data-text="hero.line2">La comodidad de hacerlo online, pero sin perder el trato humano del arquitecto.</p>
+          <p data-text="hero.line3">Elegí tu situación y te digo cómo podemos trabajarla.</p>
         </div>
+
       </div>
 
-      <p class="hero__scroll" aria-hidden="true"><span class="hero__scroll-line"></span>Deslizá</p>
+      <div class="container hero__accesos">
+        <div class="accesos" id="rad-accesos"></div>
+      </div>
+
+      <div class="container hero__band">
+        <span class="media-frame media-frame--wide">
+          <img data-pic="informativa" src="assets/images/informativa.jpg" alt="Cómo trabaja Valeria A. Martín cada consulta">
+        </span>
+      </div>
     </section>
 
     <!-- ======================= MARQUEE ======================= -->
@@ -114,178 +120,197 @@
       </div>
     </nav>
 
-    <!-- ================= QUIERO MEJORAR MI CASA + FORM ================= -->
+    <!-- ============ MI CASA TIENE UN PROBLEMA + FORM ============ -->
     <section class="section section--tint" id="mejorar-casa">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Quiero mejorar mi casa</span>
+          <span class="section__eyebrow" data-text="needsSection.eyebrow">Quiero mejorar mi casa</span>
           <h2 class="section__title" data-text="needsSection.title">¿Qué necesita tu casa?</h2>
           <p class="section__lead" data-text="needsSection.lead">Elegí tu caso y armamos la consulta. Sin tecnicismos: arrancás por lo que te pasa.</p>
         </div>
 
         <ul class="needs-grid" id="rad-needs"></ul>
 
-        <!-- Formulario de consulta a WhatsApp -->
         <div class="consult" id="consultar">
           <div id="rad-form"></div>
         </div>
+
+        <div class="galeria7" id="rad-galeria"></div>
       </div>
     </section>
 
-    <!-- ======================= SERVICIOS ======================= -->
-    <section class="section" id="servicios">
+    <!-- ============ 7. CONSULTA ONLINE ============ -->
+    <section class="section section--ink" id="consulta-online">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Servicios</span>
-          <h2 class="section__title" data-text="servicesIndex.title">Seis formas de trabajar tu casa</h2>
-        </div>
-        <ol class="svc-list" id="rad-services"></ol>
-      </div>
-    </section>
-
-    <!-- =================== ASESORAMIENTO ONLINE =================== -->
-    <section class="section section--ink" id="asesoramiento-online">
-      <div class="container">
-        <div class="section__head">
-          <span class="section__eyebrow">Consulta online</span>
-          <h2 class="section__title" data-text="online.title">Una mirada profesional a tu casa, sin moverte de ahí</h2>
-          <p class="section__lead" data-text="online.lead">Contanos qué pasa, compartís fotos o videos, y lo vemos juntos en una consulta online.</p>
+          <span class="section__eyebrow" data-text="consultaOnline.eyebrow">No sé qué necesito, pero quiero mejorar mi casa</span>
+          <h2 class="section__title" data-text="consultaOnline.title">Una mirada profesional a tu casa, sin moverte de ahí</h2>
+          <p class="section__lead" data-text="consultaOnline.intro">Contame qué pasa, compartís fotos o videos, y lo vemos juntos en una consulta online.</p>
         </div>
 
         <ol class="online__steps" id="rad-steps"></ol>
 
-        <div class="online__tools">
-          <div class="tools">
-            <span class="tools__label">¿Sobre qué te podemos ayudar?</span>
-            <div class="tools__row" id="rad-topics"></div>
-          </div>
+        <div class="tools">
+          <span class="tools__label" data-text="consultaOnline.topicsLabel">¿Sobre qué podemos hablar?</span>
+          <div class="tools__row" id="rad-topicos"></div>
+        </div>
 
-          <div class="informe">
-            <div class="informe__head">
-              <span class="informe__tag">Ejemplo de informe</span>
-              <span class="informe__num">VM · 01</span>
+        <div class="online__cta">
+          <div>
+            <div class="online__photos" id="rad-online-pics"></div>
+            <p class="online__tagline" data-text="consultaOnline.whatIntro">Me contás, analizamos, te oriento...</p>
+            <a class="btn btn--accent btn--lg" data-wa="consulta">Empezar una consulta <span class="btn__arr" aria-hidden="true">→</span></a>
+            <div class="response" data-response></div>
+          </div>
+          <div class="online__right">
+            <h3 class="recibe__title" data-text="consultaOnline.whatTitle">¿Esto es para mí? → ¿Qué voy a recibir?</h3>
+            <div class="informe">
+              <div class="informe__head">
+                <span class="informe__tag">Ejemplo de informe</span>
+                <span class="informe__num">VAM · 01</span>
+              </div>
+              <dl class="informe__rows" id="rad-informe"></dl>
+              <p class="informe__note" data-text="consultaOnline.informe.note">Ejemplo del informe que puede acompañar una consulta.</p>
             </div>
-            <dl class="informe__rows" id="rad-informe"></dl>
-            <p class="informe__note" data-text="online.informe.note">Ejemplo del informe que puede acompañar una consulta.</p>
           </div>
         </div>
 
-        <div class="section__cta">
-          <a class="btn btn--paper btn--lg" data-wa="consultaOnline">Quiero hacer una consulta <span class="btn__arr" aria-hidden="true">→</span></a>
-        </div>
       </div>
     </section>
 
-    <!-- ======================= REMODELACIONES ======================= -->
-    <section class="section" id="remodelaciones">
+    <!-- ============ 8 y 9. REMODELACIONES ============ -->
+    <section class="section section--tint" id="remodelaciones">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Para remodelaciones</span>
-          <h2 class="section__title" data-text="remodel.title">¿Querés cambiar, pero no sabés por dónde empezar?</h2>
-          <p class="section__lead" data-text="remodel.lead">Antes de un proyecto grande, una primera consulta: escuchamos tu idea y te decimos qué conviene, en qué orden y cuánto implica.</p>
+          <span class="section__eyebrow" data-text="remodelaciones.eyebrow">Quiero remodelar mi casa</span>
+          <h2 class="section__title" data-text="remodelaciones.title">¿Querés cambiar, pero no sabés por dónde empezar?</h2>
+          <p class="section__lead" data-text="remodelaciones.lead">Te acompaño a transformar tus ideas en un proyecto real, con soluciones a medida y una mirada integral del espacio.</p>
         </div>
 
-        <div class="remodel__examples">
-          <span class="remodel__examples-label">Consultas habituales</span>
-          <ul id="rad-examples"></ul>
+        <div class="consultas">
+          <span class="tools__label" data-text="remodelaciones.consultasTitle">Consultas habituales</span>
+          <ul class="consultas__list" id="rad-consultas"></ul>
         </div>
 
-        <div class="cmp-grid" id="rad-compare"></div>
+        <h3 class="what-block" data-text="remodelaciones.whatTitle">¿Esto es para mí? → ¿Qué voy a recibir?</h3>
+
+        <div class="cmp-grid" id="rad-cards"></div>
+
+        <p class="r-note" data-text="remodelaciones.note">Este servicio se realiza 100% online. La precisión de la propuesta estará sujeta a la información proporcionada por el cliente (fotos, videos, plano y/o medidas).</p>
 
         <div class="section__cta">
-          <a class="btn btn--accent btn--lg" data-wa="remodelacion">Empezar por una consulta <span class="btn__arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--accent btn--lg" data-wa="remodelaciones">Empezar por una consulta <span class="btn__arr" aria-hidden="true">→</span></a>
         </div>
+        <div class="response" data-response></div>
       </div>
     </section>
 
-    <!-- ======================= INTERIORES ======================= -->
-    <section class="section section--mood" id="interiores">
+    <!-- ============ 10. INSPIRACIÓN — TRANSFORMACIONES REALES ============ -->
+    <section class="section" id="inspiracion">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Diseño de interiores</span>
-          <h2 class="section__title" data-text="interiors.title">Tu casa, rediseñada con mirada arquitectónica</h2>
-          <p class="section__lead" data-text="interiors.lead">Reformar con un diseño que responda a cómo vivís.</p>
+          <h2 class="inspi__title" data-text="inspiracion.title">INSPIRACIÓN — TRANSFORMACIONES REALES</h2>
+          <p class="inspi__sub" data-text="inspiracion.sub">De cómo está a cómo podría estar</p>
+          <p class="inspi__text" data-text="inspiracion.text">Una buena decisión de diseño puede transformar por completo un espacio.</p>
+        </div>
+        <div class="inspi-grid" id="rad-inspi"></div>
+      </div>
+    </section>
+
+    <!-- ============ 11 y 12. DISEÑO DE INTERIORES ============ -->
+    <section class="section section--ink" id="diseno-interiores">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-text="disenoInteriores.eyebrow">Diseño de interiores</span>
+          <h2 class="section__title" data-text="disenoInteriores.title">Tu casa, rediseñada con mirada arquitectónica</h2>
+          <p class="section__lead" data-text="disenoInteriores.lead">Reformar con un diseño que responda a cómo vivís.</p>
         </div>
 
-        <div class="mood-grid">
-          <div class="mood-grid__img" data-pic="mood"><span class="p-slot__mark" aria-hidden="true">✳</span></div>
-          <div class="mood-grid__chips">
-            <span class="mood-grid__label">De qué podemos hablar</span>
-            <div class="chips" id="rad-chips"></div>
+        <div class="di-row">
+          <div class="di-photos" id="rad-interiores"></div>
+          <div class="di-topics">
+            <span class="tools__label" data-text="disenoInteriores.topicsLabel">De qué podemos hablar</span>
+            <div class="tools__row" id="rad-topicos-di"></div>
           </div>
         </div>
 
-        <div class="section__cta">
-          <a class="btn btn--paper btn--lg" data-wa="interiores">Quiero rediseñar un ambiente <span class="btn__arr" aria-hidden="true">→</span></a>
+        <div class="deliver">
+          <div class="section__cta">
+            <a class="btn btn--paper btn--lg" data-wa="ambiente">Quiero rediseñar un ambiente <span class="btn__arr" aria-hidden="true">→</span></a>
+          </div>
+          <div class="response response--invert" data-response></div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= BIENESTAR ======================= -->
-    <section class="section" id="bienestar">
-      <div class="container container--narrow">
+    <!-- ============ 13. ESPACIOS QUE SE SIENTEN BIEN ============ -->
+    <section class="section" id="espacios-bienestar">
+      <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Espacios y bienestar</span>
-          <h2 class="section__title" data-text="wellness.title">Espacios que se sienten bien</h2>
-          <p class="section__lead" data-text="wellness.lead">No es solo cómo se ve: es cómo se habita. Luz, orientación y circulación cambian cómo se vive un espacio.</p>
+          <span class="section__eyebrow" data-text="bienestar.eyebrow">Quiero mejorar el confort de mi casa</span>
+          <h2 class="section__title" data-text="bienestar.title">Espacios que se sienten bien</h2>
+          <p class="section__lead" data-text="bienestar.lead">No es solo cómo se ve: es cómo se habita. Luz, orientación y circulación cambian cómo se vive un espacio.</p>
         </div>
 
-        <ul class="concept-grid" id="rad-concepts"></ul>
+        <div class="conf-photos" id="rad-confort-pics"></div>
 
-        <blockquote class="wellness-quote">
-          <p class="wellness-quote__text" data-text="wellness.fengshui">Cuando aporta, sumamos criterios de Feng Shui como complemento, sin perder el rigor arquitectónico.</p>
+        <blockquote class="ident-quote">
+          <p data-text="bienestar.quote">No diseñamos solo metros cuadrados; creamos entornos que estimulan tu mente, equilibran tus emociones y transforman la forma en que vivís.</p>
         </blockquote>
 
         <div class="section__cta">
-          <a class="btn btn--accent btn--lg" data-wa="bienestar">Quiero un espacio que se sienta bien <span class="btn__arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--accent btn--lg" data-wa="confort">Quiero un espacio que se sienta bien <span class="btn__arr" aria-hidden="true">→</span></a>
         </div>
+        <div class="response" data-response></div>
       </div>
     </section>
 
-    <!-- ==================== ANTES DE COMPRAR ==================== -->
-    <section class="section section--ink" id="comprar-casa">
+    <!-- ============ 14. ANTES DE COMPRAR ============ -->
+    <section class="section section--ink" id="antes-de-comprar">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Antes de comprar</span>
-          <h2 class="section__title" data-text="prePurchase.title">Antes de comprar, preguntale a un arquitecto</h2>
-          <p class="section__lead" data-text="prePurchase.lead">Una mirada profesional a la propiedad te muestra lo que no se ve: humedades, grietas, instalaciones y el potencial real para ampliar o transformar.</p>
+          <span class="section__eyebrow" data-text="comprar.eyebrow">Estoy por comprar una casa</span>
+          <h2 class="section__title" data-text="comprar.title">Antes de comprar, preguntale a un arquitecto</h2>
+          <p class="section__lead" data-text="comprar.lead">Una mirada profesional a la propiedad te muestra lo que no se ve: humedades, grietas, instalaciones y el potencial real para ampliar o transformar.</p>
         </div>
 
         <div class="pre__row">
           <ul class="pre__checks" id="rad-checks"></ul>
           <div class="pre__side">
-            <p class="pre__online" data-text="prePurchase.online">Online o presencial, según el caso.</p>
-            <a class="btn btn--paper btn--lg" data-wa="comprarCasa">Pedir una revisión de la propiedad <span class="btn__arr" aria-hidden="true">→</span></a>
+            <span class="media-frame"><img data-pic="comprarFoto" src="assets/images/comprar.jpg" alt="Revisión de una propiedad"></span>
+            <a class="btn btn--paper btn--lg" data-wa="comprar">Pedir una revisión de la propiedad <span class="btn__arr" aria-hidden="true">→</span></a>
+            <div class="response response--invert" data-response></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= PROYECTOS ======================= -->
+    <!-- ============ 15. PROYECTOS ============ -->
     <section class="section section--projects" id="proyectos">
       <div class="container">
         <div class="section__head">
-          <span class="section__eyebrow">Proyectos</span>
+          <span class="section__eyebrow" data-text="projects.eyebrow">Proyectos</span>
           <h2 class="section__title" data-text="projects.title">Obras y espacios con intención</h2>
+          <p class="section__lead" data-text="projects.lead">Documentación, proceso y resultado de cada proyecto.</p>
         </div>
         <div class="projects-grid" id="rad-projects"></div>
       </div>
     </section>
 
-    <!-- ====================== SOBRE VALERIA ====================== -->
+    <!-- ============ 16. SOBRE VALERIA ============ -->
     <section class="section section--about" id="sobre-mi">
       <div class="container">
         <div class="about">
           <figure class="about__figure">
-            <div class="about__img" data-pic="retrato"><span class="p-slot__mark" aria-hidden="true">✳</span></div>
-            <figcaption class="about__caption">Retrato profesional · Valeria Martín</figcaption>
+            <img class="about__img" data-pic="retrato" src="assets/images/retrato.jpg" alt="Retrato de Valeria A. Martín">
+            <figcaption class="about__caption">Valeria A. Martín · VAM Arquitectura</figcaption>
           </figure>
 
           <div class="about__body">
             <div class="section__head section__head--left">
-              <span class="section__eyebrow">Sobre Valeria</span>
+              <span class="section__eyebrow" data-text="about.eyebrow">Sobre Valeria</span>
               <h2 class="section__title" data-text="about.title">Arquitectura con atención a las personas</h2>
-              <p class="about__para" data-text="about.para">Te explica claro, sin tecnicismos, y te acompaña en cada paso.</p>
+              <p class="about__para" data-text="about.para">Te explico claro, sin tecnicismos, y te acompaño en cada paso.</p>
             </div>
 
             <ol class="how-list" id="rad-how"></ol>
@@ -294,29 +319,37 @@
       </div>
     </section>
 
-    <!-- ======================= INSTAGRAM ======================= -->
+    <!-- ============ 17. INSTAGRAM ============ -->
     <section class="section" id="instagram">
       <div class="container">
-        <div class="section__head">
-          <span class="section__eyebrow">Instagram</span>
-          <h2 class="section__title" data-text="instagram.title">Conocé más proyectos e ideas</h2>
-          <p class="section__lead" data-text="instagram.lead">Trabajos en curso e ideas en @arqvaleriamartin.</p>
-        </div>
-        <div class="section__cta">
-          <a class="btn btn--accent btn--lg" data-href="instagram">Ver en Instagram <span class="btn__arr" aria-hidden="true">→</span></a>
+        <div class="ig">
+          <div class="ig__body">
+            <div class="section__head">
+              <span class="section__eyebrow" data-text="instagram.eyebrow">Instagram</span>
+              <h2 class="section__title" data-text="instagram.title">Conocé más proyectos e ideas</h2>
+              <p class="section__lead" data-text="instagram.text">Trabajos en curso e ideas en @argvaleriamartin.</p>
+            </div>
+            <div class="section__cta">
+              <a class="btn btn--accent btn--lg" data-href="instagram" data-text="instagram.cta">Ver en Instagram →</a>
+            </div>
+          </div>
+          <div class="ig__img">
+            <img data-pic="vivienda" src="assets/images/vivienda.jpg" alt="Proyectos e ideas de VAM Arquitectura">
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= CONTACTO ======================= -->
+    <!-- ============ 18. CONTACTO / CTA FINAL ============ -->
     <section class="final" id="contacto">
       <div class="container">
         <h2 class="final__title" data-text="finalCta.title">Idea, consulta o problema: hablemos de tu casa</h2>
-        <p class="final__lead" data-text="finalCta.lead">Contanos qué te pasa y te respondemos a la brevedad.</p>
+        <p class="final__lead" data-text="finalCta.text">Contanos qué te pasa y te respondemos a la brevedad.</p>
         <div class="final__actions">
           <a class="btn btn--accent btn--lg" data-wa="general">Hablar por WhatsApp <span class="btn__arr" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost-invert btn--lg" data-href="instagram">Ver en Instagram</a>
+          <a class="btn btn--ghost-invert btn--lg" data-href="instagram" data-text="finalCta.ig">Ver en Instagram</a>
         </div>
+        <p class="final__time" data-text="response.time">Tiempo de respuesta: hasta 48 hs hábiles</p>
       </div>
     </section>
 
@@ -329,9 +362,9 @@
         <div class="footer__brand">
           <p class="brand">
             <img class="brand__logo" src="assets/images/logo.jpg" alt="" width="36" height="36">
-            <span data-text="owner.brand">Valeria Martín</span>
+            <span data-text="footer.name">Valeria Martín</span>
           </p>
-          <p class="footer__tag" data-text="owner.tagline">Valeria Martín · Arquitectura — casas que funcionan bien</p>
+          <p class="footer__tag" data-text="footer.tagline">Valeria Martín · Arquitectura — casas que funcionan bien</p>
         </div>
 
         <nav class="footer__col" aria-label="Navegación">
@@ -350,7 +383,7 @@
       </div>
 
       <div class="footer__bottom">
-        <p>© <span id="footerYear">2026</span> <span data-text="owner.name">Valeria Martín</span></p>
+        <p>© <span id="footerYear">2026</span> <span data-text="footer.name">Valeria Martín</span></p>
       </div>
     </div>
   </footer>

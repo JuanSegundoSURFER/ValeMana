@@ -1,39 +1,70 @@
 /* ============================================================
-   VALEMANA · VALERIA MARTÍN — CONTENIDO EDITABLE
+   VALEMANA · VAM ARQUITECTURA — CONTENIDO EDITABLE
    ------------------------------------------------------------
-   Todos los textos, servicios, necesidades y proyectos se editan
-   en este archivo. Los listados de abajo se renderizan solos
-   en la página: agregar o sacar un ítem actualiza el sitio.
+   Todos los textos se editan en este archivo. Los listados se
+   renderizan solos en la página (js/app.js).
+   Los textos indicados en el documento se usan literales.
    ============================================================ */
 
 window.SITE_CONTENT = {
 
-  /* ---------- Mensajes de WhatsApp (respuestas contextuales) ----------
-     Cada botón usa una clave: data-wa="clave". */
-  wa: {
-    general:
-      "Hola Valeria, vi tu página y quisiera hacer una consulta sobre mi casa.",
-    consultaOnline:
-      "Hola Valeria, vi el servicio de consulta online y quisiera hacer una consulta puntual sobre mi casa.",
-    remodelacion:
-      "Hola Valeria, estoy pensando en remodelar y quería empezar con una consulta profesional.",
-    interiores:
-      "Hola Valeria, me interesa el servicio de diseño de interiores y quería comentarte un ambiente.",
-    bienestar:
-      "Hola Valeria, me interesa el enfoque de espacios y bienestar para mi casa.",
-    comprarCasa:
-      "Hola Valeria, estoy por comprar una casa y quisiera una mirada profesional antes de decidir.",
+  /* ---------- 1. HERO / PRIMERA PANTALLA ---------- */
+  hero: {
+    eyebrow: "Valeria A. Martín · VAM Arquitectura",
+    title: "Tu casa, sana, cómoda y bien pensada",
+    titleTop: "Tu casa, sana,",
+    titleMid: "cómoda y bien",
+    titleEnd: "pensada",
+    line1: "Decisiones claras para mejorar, reformar o transformar tu casa.",
+    line2: "La comodidad de hacerlo online, pero sin perder el trato humano del arquitecto.",
+    line3: "Elegí tu situación y te digo cómo podemos trabajarla.",
   },
 
-  /* ---------- Franja móvil debajo del hero (un solo marquee) ---------- */
+  /* Bloque de confianza del hero */
+  trust: {
+    title: "Del otro lado hay una persona.",
+    text: "Tus consultas son atendidas personalmente por profesionales que escuchan tu caso y te orientan.",
+    reply: "Te responderemos dentro de las 48 hrs hábiles.",
+    time: "Tiempo de respuesta: hasta 48 hs hábiles",
+  },
+
+  /* ---------- Respuesta a las consultas (se repite junto a los CTA) ---------- */
+  response: {
+    title: "¿Qué pasa cuando me escribís?",
+    text: "Te respondemos personalmente por WhatsApp y te enviamos toda la información para contratar: precio, formas de pago, qué incluye y disponibilidad de agenda.",
+    time: "Tiempo de respuesta: hasta 48 hs hábiles",
+  },
+
+  /* ---------- Mensajes de WhatsApp ---------- */
+  wa: {
+    general: "Hola Valeria, vi tu página y quisiera hacer una consulta sobre mi casa.",
+    remodelaciones: "Hola Valeria, quiero remodelar mi casa y quisiera asesoramiento para empezar.",
+    ambiente: "Hola Valeria, quiero mejorar un ambiente y quisiera una propuesta de diseño de interiores.",
+    problema: "Hola Valeria, mi casa tiene un problema y necesito ayuda para diagnosticarlo.",
+    comprar: "Hola Valeria, estoy por comprar una casa y quisiera una revisión profesional de la propiedad.",
+    confort: "Hola Valeria, quiero mejorar el confort de mi casa y quisiera asesoramiento.",
+    consulta: "Hola Valeria, no sé qué necesita mi casa pero quiero mejorarla. Quisiera una consulta online.",
+  },
+
+  /* ---------- Franja de categorías (navegación secundaria) ---------- */
   marquee: [
-    "Humedad", "Filtraciones", "Grietas", "Ampliaciones",
-    "Remodelaciones", "Distribución", "Cocinas", "Baños",
-    "Diseño de interiores", "Bienestar", "Antes de comprar",
+    "Humedad", "Filtraciones", "Grietas", "Ampliaciones", "Remodelaciones",
+    "Distribución", "Cocinas", "Baños", "Diseño de interiores",
   ],
 
-  /* ---------- QUIERO MEJORAR MI CASA — selector de necesidades ---------- */
+  /* ---------- FRANJA DE SERVICIOS (debajo del marquee) ---------- */
+  services: [
+    { id: "mejorar-casa", num: "01", title: "Mi casa tiene un problema", anchor: "#mejorar-casa" },
+    { id: "no-se", num: "02", title: "No sé qué necesito", anchor: "#consulta-online" },
+    { id: "remodelaciones", num: "03", title: "Asesoramiento para remodelaciones", anchor: "#remodelaciones" },
+    { id: "interiores", num: "04", title: "Diseño de interiores", anchor: "#diseno-interiores" },
+    { id: "bienestar", num: "05", title: "Espacios y bienestar", anchor: "#espacios-bienestar" },
+    { id: "comprar-casa", num: "06", title: "Asesoramiento antes de comprar", anchor: "#antes-de-comprar" },
+  ],
+
+  /* ---------- MI CASA TIENE UN PROBLEMA — selector de necesidades ---------- */
   needsSection: {
+    eyebrow: "Mi casa tiene un problema",
     title: "¿Qué necesita tu casa?",
     lead: "Elegí tu caso y armamos la consulta. Sin tecnicismos: arrancás por lo que te pasa.",
   },
@@ -44,73 +75,92 @@ window.SITE_CONTENT = {
     { id: "filtraciones", title: "Tengo filtraciones", desc: "El agua entra por el techo o las paredes." },
     { id: "techo", title: "Tengo problemas en el techo", desc: "Goteras, tejas o cubierta en mal estado." },
     { id: "instalaciones", title: "Tengo problemas con las instalaciones", desc: "Cañerías o electricidad que no funcionan." },
-    { id: "ampliar", title: "Quiero ampliar", desc: "Sumar metros: un ambiente, un piso o un exterior." },
-    { id: "remodelar", title: "Quiero remodelar", desc: "Renovar un ambiente, una zona o el frente." },
-    { id: "distribucion", title: "Quiero cambiar la distribución", desc: "Abrir, unir o redistribuir ambientes." },
-    { id: "modernizar", title: "Quiero modernizar mi casa", desc: "Actualizar terminaciones, luz y materiales." },
-    { id: "ambiente", title: "Quiero mejorar un ambiente", desc: "Cocina, baño, living o dormitorio." },
-    {
-      id: "nose",
-      title: "No sé qué tiene mi casa",
-      desc: "Algo no anda pero no sabés qué es: lo descubrimos juntos.",
-      wide: true,
-    },
+    { id: "aberturas", title: "Tengo problemas en aberturas y cerramientos" },
+    { id: "pisos", title: "Tengo problemas en pisos, paredes y revestimientos" },
+    { id: "confort", title: "Tengo problemas de confort en la vivienda" },
   ],
 
-  /* ---------- Formulario de consulta (a WhatsApp) ---------- */
-  form: {
-    eyebrow: "Tu consulta",
-    title: "Completá tu consulta",
-    intro: "Armamos el mensaje por WhatsApp para tu caso. Elegí los archivos que quieras compartir y completá el resto; en WhatsApp los adjuntás en el chat.",
-    topicLabel: "Tu tema",
-    defaultTopic: "Consulta general",
-    customToggle: "O escribir otro tema",
-    customPlaceholder: "¿Qué te pasa?",
-    filesLabel: "Adjuntá fotos, videos, planos o medidas",
-    filesBtn: "Elegir archivos",
-    filesHint: "Se listan acá y los pasás cuando se abre WhatsApp.",
-    filesEmpty: "No elegiste archivos todavía.",
-    filesCount: "archivo(s)",
-    msgLabel: "Contanos en unas líneas qué te pasa",
-    msgPlaceholder: "Ej.: el techo del dormitorio se humedece cuando llueve…",
-    nameLabel: "Tu nombre",
-    namePlaceholder: "Cómo podemos llamarte",
-    submit: "Enviar por WhatsApp",
-    note: "Al abrir WhatsApp, adjuntá ahí los archivos que elegiste.",
-    feedbackNoNumber: "Todavía no hay número de WhatsApp configurado. Editalo en js/config.js.",
+  /* ---------- Galería de 7 imágenes de la sección ---------- */
+  galeria: ["galeria-1", "galeria-2", "galeria-3", "galeria-4", "galeria-5", "galeria-6", "galeria-7"],
+
+  /* ---------- 5. ¿QUÉ NECESITA TU CASA? ---------- */
+  queNecesita: {
+    eyebrow: "Elegí por dónde empezar",
+    title: "¿Qué necesita tu casa?",
+    lead: "Las seis situaciones principales, con las soluciones que las resuelven.",
+    items: [
+      {
+        num: "01",
+        situation: "Quiero remodelar mi casa",
+        solution: "Remodelar, cambios, ampliaciones, redistribución, reformas integrales o parciales.",
+        href: "#remodelaciones",
+        img: "remodelar",
+        topics: ["Quiero abrir la cocina al living", "Quiero ampliar", "Quiero reformar el baño", "Quiero modernizar mi casa"],
+      },
+      {
+        num: "02",
+        situation: "Quiero mejorar un ambiente",
+        solution: "Cocina, baño, dormitorio, living, patio, etc.",
+        href: "#diseno-interiores",
+        img: "ambiente",
+        topics: ["Redistribución de ambientes", "Cocinas", "Baños", "Living", "Dormitorios"],
+      },
+      {
+        num: "03",
+        situation: "Mi casa tiene un problema",
+        solution: "Humedad, filtraciones, grietas, techo, instalaciones, deterioros, etc.",
+        href: "#mejorar-casa",
+        img: "problema",
+        topics: ["Humedad", "Filtraciones", "Grietas y fisuras", "Techo", "Instalaciones", "No sé qué tiene mi casa"],
+      },
+      {
+        num: "04",
+        situation: "Estoy por comprar una casa",
+        solution: "Quiero saber si conviene, qué se puede modificar y qué inversión puede requerir.",
+        href: "#antes-de-comprar",
+        img: "comprar",
+        topics: ["Estado general de la propiedad", "Humedades y filtraciones", "Instalaciones", "Potencial de transformación"],
+      },
+      {
+        num: "05",
+        situation: "Quiero mejorar el confort de mi casa",
+        solution: "Luz, ventilación, temperatura, orientación, eficiencia, bienestar.",
+        href: "#espacios-bienestar",
+        img: "confort",
+        topics: ["Distribución", "Luz natural", "Orientación", "Colores", "Feng Shui", "Etiquetado de viviendas"],
+      },
+      {
+        num: "06",
+        situation: "Consulta online",
+        solution: "No sé qué necesita mi casa y quiero una mirada profesional.",
+        href: "#consulta-online",
+        img: "nose",
+        topics: ["No sé qué necesita mi casa", "Quiero orientación profesional"],
+      },
+    ],
   },
 
-  /* ---------- Índice de los 6 servicios ---------- */
-  servicesIndex: {
-    eyebrow: "Servicios",
-    title: "Seis formas de trabajar tu casa",
-  },
-
-  services: [
-    { id: "mejorar-casa", num: "01", title: "Quiero mejorar mi casa", desc: "El punto de partida: contanos qué necesitás.", anchor: "#mejorar-casa" },
-    { id: "asesoramiento-online", num: "02", title: "Consulta online", desc: "Una mirada profesional a distancia, sin moverte.", anchor: "#asesoramiento-online" },
-    { id: "remodelaciones", num: "03", title: "Asesoramiento para remodelaciones", desc: "Cambiar algo, sin saber por dónde arrancar.", anchor: "#remodelaciones" },
-    { id: "interiores", num: "04", title: "Diseño de interiores", desc: "Cocinas, baños, luz, materiales y renders.", anchor: "#interiores" },
-    { id: "bienestar", num: "05", title: "Espacios y bienestar", desc: "Espacios que se sienten bien.", anchor: "#bienestar" },
-    { id: "comprar-casa", num: "06", title: "Asesoramiento antes de comprar", desc: "Una decisión informada antes de comprar.", anchor: "#comprar-casa" },
-  ],
-
-  /* ---------- Asesoramiento online ---------- */
-  online: {
-    eyebrow: "Consulta online",
+  /* ---------- 7. NO SÉ QUÉ NECESITO (consulta online) ---------- */
+  consultaOnline: {
+    eyebrow: "No sé qué necesito, pero quiero mejorar mi casa",
     title: "Una mirada profesional a tu casa, sin moverte de ahí",
-    lead: "Contanos qué pasa, compartís fotos o videos, y lo vemos juntos en una consulta online.",
+    intro: "Contame qué pasa, compartís fotos o videos, y lo vemos juntos en una consulta online.",
     steps: [
-      { n: "01", t: "Contar qué pasa", d: "Un mensaje con tu caso alcanza." },
-      { n: "02", t: "Enviar fotos o videos", d: "Con el celular alcanza." },
-      { n: "03", t: "Consulta online", d: "Conversamos en una videollamada." },
-      { n: "04", t: "Orientación profesional", d: "Sabés qué hacer y con qué prioridad." },
-      { n: "05", t: "Informe si hace falta", d: "Un documento claro con lo analizado." },
+      { n: "01", t: "Contar qué pasa", d: "Un relato sobre tu situación" },
+      { n: "02", t: "Enviar fotos o videos", d: "Con la información necesaria" },
+      { n: "03", t: "Consulta online", d: "Conversamos sobre el caso" },
+      { n: "04", t: "Orientación profesional", d: "Señales para tomar una mejor decisión" },
+      { n: "05", t: "Informe si hace falta", d: "Un documento claro con la orientación" },
     ],
+    topicsLabel: "¿Sobre qué podemos hablar?",
     topics: [
-      "Humedades", "Filtraciones", "Grietas y fisuras", "Patologías constructivas",
-      "Problemas de distribución", "Mantenimiento", "Ampliaciones", "Remodelaciones",
+      "Humedades", "Filtraciones", "Grietas y fisuras", "Quiero cambiar la distribución",
+      "Mantenimiento", "Quiero ampliar", "Remodelaciones", "Quiero mejorar un ambiente",
+      "No sé qué tiene mi casa",
     ],
+    photos: ["consulta-1", "consulta-2", "consulta-3"],
+    whatTitle: "¿Esto es para mí? → ¿Qué voy a recibir?",
+    whatIntro: "Me contás, analizamos, te oriento...",
     informe: {
       field: "Problema observado",
       motivo: "Posibles causas",
@@ -120,77 +170,131 @@ window.SITE_CONTENT = {
       proximo: "Próximo paso",
       note: "Ejemplo del informe que puede acompañar una consulta.",
     },
-    cta: "Quiero hacer una consulta",
   },
 
-  /* ---------- Asesoramiento para remodelaciones ---------- */
-  remodel: {
-    eyebrow: "Para remodelaciones",
+  /* ---------- 8 y 9. REMODELACIONES ---------- */
+  remodelaciones: {
+    eyebrow: "Quiero remodelar mi casa",
     title: "¿Querés cambiar, pero no sabés por dónde empezar?",
-    lead: "Antes de un proyecto grande, una primera consulta: escuchamos tu idea y te decimos qué conviene, en qué orden y cuánto implica.",
-    examples: [
-      "Quiero abrir la cocina al living.",
-      "Quiero ampliar.",
-      "Quiero reformar el baño.",
-      "Quiero transformar el patio.",
-      "Quiero modernizar mi casa.",
-      "Quiero saber si puedo hacer una ampliación.",
-      "Quiero saber qué conviene hacer primero.",
+    lead: "Te acompaño a transformar tus ideas en un proyecto real, con soluciones a medida y una mirada integral del espacio.",
+    consultasTitle: "Consultas habituales",
+    consultas: [
+      "Quiero abrir la cocina al living",
+      "Quiero ampliar",
+      "Quiero reformar el baño",
+      "Quiero transformar el patio",
+      "Quiero modernizar mi casa",
+      "Quiero saber si puedo hacer una ampliación",
+      "Quiero saber qué conviene hacer primero",
     ],
-    compare: [
+    whatTitle: "¿Esto es para mí? → ¿Qué voy a recibir?",
+    cards: [
       {
-        n: "01",
-        name: "Asesoramiento inicial",
-        desc: "Para decidir tranquilo antes de invertir.",
-        items: ["Escuchamos tu idea", "Te decimos si es viable", "Qué conviene hacer primero"],
+        name: "Asesoramiento inicial online",
+        items: [
+          "Revisión de fotos, videos, planos y medidas proporcionadas.",
+          "Análisis de la distribución actual.",
+          "Identificación de posibilidades y limitaciones.",
+          "Recomendaciones sobre distribución, usos y prioridades.",
+          "Primera orientación sobre materiales, estilos o soluciones.",
+          "Propuesta inicial esquemática para ayudarte a definir qué conviene hacer y por dónde empezar.",
+        ],
       },
       {
-        n: "02",
         name: "Proyecto completo",
-        desc: "Para llevar tu idea adelante con un proyecto.",
-        items: ["Proyecto y planos", "Trámites y permisos", "Seguimiento de obra"],
+        items: [
+          "Relevamiento a distancia mediante fotos, videos, planos y medidas proporcionadas por el cliente.",
+          "Desarrollo de la propuesta de distribución y organización espacial.",
+          "Plantas, cortes y vistas del proyecto.",
+          "Modelado 3D y renders para visualizar cómo quedará el espacio.",
+          "Definición de materiales, terminaciones y criterios de diseño.",
+          "Documentación gráfica necesaria para comprender y llevar adelante la propuesta.",
+          "Ajustes y revisión de la propuesta según lo acordado.",
+        ],
       },
     ],
-    cta: "Empezar por una consulta",
+    note: "Este servicio se realiza 100% online. La precisión de la propuesta estará sujeta a la información proporcionada por el cliente (fotos, videos, plano y/o medidas).",
   },
 
-  /* ---------- Diseño de interiores ---------- */
-  interiors: {
+  /* ---------- 10. INSPIRACIÓN — TRANSFORMACIONES REALES ---------- */
+  inspiracion: {
+    eyebrow: "Inspiración",
+    title: "INSPIRACIÓN — TRANSFORMACIONES REALES",
+    sub: "De cómo está a cómo podría estar",
+    text: "Una buena decisión de diseño puede transformar por completo un espacio.",
+    cases: [
+      {
+        name: "Fachada",
+        tag: "Remodelación + propuesta de materiales",
+        imgA: "fachada-antes", imgB: "fachada-despues",
+        labelA: "Antes", labelB: "Después",
+      },
+      {
+        name: "Balcón",
+        tag: "Remodelación + propuesta de materiales",
+        imgA: "balcon-antes", imgB: "balcon-despues",
+        labelA: "Antes", labelB: "Después",
+      },
+      {
+        name: "Cocina",
+        tag: "Propuesta diseño de cocina + Concreción real del cliente",
+        imgA: "cocina-render", imgB: "cocina-real",
+        labelA: "Render", labelB: "Real",
+      },
+      {
+        name: "Baño",
+        tag: "Propuesta diseño",
+        imgA: "bano-antes", imgB: "bano-despues",
+        labelA: "Antes", labelB: "Después",
+      },
+      {
+        name: "Garage en casa",
+        tag: "Optimización de espacio + Concreción de lugar de trabajo. diseño espacial y mobiliario",
+        imgA: "garage-antes", imgB: "garage-despues",
+        labelA: "Antes", labelB: "Después",
+      },
+    ],
+  },
+
+  /* ---------- 11 y 12. DISEÑO DE INTERIORES (bloque oscuro) ---------- */
+  disenoInteriores: {
     eyebrow: "Diseño de interiores",
     title: "Tu casa, rediseñada con mirada arquitectónica",
-    lead: "Reformar con un diseño que responda a cómo vivís.",
-    chips: [
+    lead: "Quiero mejorar un ambiente",
+    photos: ["interiores"],
+    topicsLabel: "De qué podemos hablar",
+    topics: [
       "Redistribución de ambientes", "Cocinas", "Baños", "Living", "Dormitorios",
       "Materiales", "Colores", "Iluminación", "Mobiliario", "Renders y visualización",
     ],
     cta: "Quiero rediseñar un ambiente",
   },
 
-  /* ---------- Espacios y bienestar ---------- */
-  wellness: {
-    eyebrow: "Espacios y bienestar",
+  /* ---------- 13. ESPACIOS QUE SE SIENTEN BIEN ---------- */
+  bienestar: {
+    eyebrow: "Quiero mejorar el confort de mi casa",
     title: "Espacios que se sienten bien",
     lead: "No es solo cómo se ve: es cómo se habita. Luz, orientación y circulación cambian cómo se vive un espacio.",
     concepts: [
-      { t: "Distribución", d: "Ambientes que fluyen con tu día." },
-      { t: "Luz natural", d: "El recurso que más transforma." },
-      { t: "Orientación", d: "Aprovechar el sol de la casa." },
-      { t: "Circulación", d: "Pasos con sentido." },
-      { t: "Interior y exterior", d: "La relación con el patio." },
-      { t: "Colores", d: "Paletas que acompañan." },
-      { t: "Sensación de amplitud", d: "En lo visual y en el uso." },
-      { t: "Feng Shui", d: "Como complemento, cuando aporta." },
+      { t: "Distribución", d: "Ambientes que fluyen con tu día. Interacción y armonía funcional", img: "distribucion" },
+      { t: "Luz natural", d: "El recurso que más transforma.", img: "luz-natural" },
+      { t: "Orientación", d: "Aprovechar el sol en la casa. Confort natural en cada estación", img: "orientacion" },
+      { t: "Etiquetado de viviendas", d: "Permite evaluar las prestaciones energéticas de una vivienda", img: "etiquetado" },
+      { t: "Interior – Exterior", d: "La relación con el patio, galería, balcón, jardín.", img: "interior-exterior" },
+      { t: "Colores", d: "Paletas que acompañan", img: "colores" },
+      { t: "Sensación de amplitud", d: "Espacios que respiran, maximizan los volúmenes", img: "amplitud" },
+      { t: "Feng Shui", d: "Armonía y equilibrio.", img: "feng-shui" },
     ],
-    fengshui:
-      "Cuando aporta, sumamos criterios de Feng Shui como complemento, sin perder el rigor arquitectónico.",
+    quote: "No diseñamos solo metros cuadrados; creamos entornos que estimulan tu mente, equilibran tus emociones y transforman la forma en que vivís.",
     cta: "Quiero un espacio que se sienta bien",
   },
 
-  /* ---------- Asesoramiento antes de comprar ---------- */
-  prePurchase: {
-    eyebrow: "Antes de comprar",
+  /* ---------- 14. ANTES DE COMPRAR ---------- */
+  comprar: {
+    eyebrow: "Estoy por comprar una casa",
     title: "Antes de comprar, preguntale a un arquitecto",
     lead: "Una mirada profesional a la propiedad te muestra lo que no se ve: humedades, grietas, instalaciones y el potencial real para ampliar o transformar.",
+    img: "comprar",
     checks: [
       "Estado general de la propiedad",
       "Humedades y filtraciones",
@@ -202,106 +306,118 @@ window.SITE_CONTENT = {
       "Problemas que habría que presupuestar",
       "Potencial de transformación",
     ],
-    online: "Online o presencial, según el caso.",
     cta: "Pedir una revisión de la propiedad",
   },
 
-  /* ---------- Proyectos (portfolio) ----------
-     Datos provisorios: reemplazar con proyectos reales. */
+  /* ---------- 15. PROYECTOS ---------- */
   projects: {
     eyebrow: "Proyectos",
     title: "Obras y espacios con intención",
+    lead: "Documentación, proceso y resultado de cada proyecto.",
   },
 
-  projectPlaceholders: [
+  projectsList: [
     {
-      id: "p01",
-      img: "hero",
-      name: "Proyecto 01",
-      type: "[TIPO — FACHADA / RESIDENCIAL]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
-      wide: true,
+      code: "Proyecto 01",
+      name: "Remodelación stand",
+      type: "Local comercial",
+      img: "stand",
+      desc: "Remodelación de local comercial adaptada a los requerimientos técnicos y administrativos del shopping. Se aprovechó la estructura existente y se renovaron los tratamientos y terminaciones de las superficies, logrando un cambio visual significativo con una intervención de bajo costo. Incluyó la elaboración de toda la documentación necesaria para su aprobación.",
     },
     {
-      id: "p02",
-      img: "interiorLiving",
-      name: "Proyecto 02",
-      type: "[TIPO — INTERIOR / LIVING]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
+      code: "Proyecto 02",
+      name: "Transformación + ampliación de fachada",
+      img: "fachada-transformacion",
+      imgs: ["fachada-transformacion-doc", "fachada-transformacion-antes", "fachada-transformacion-despues"],
+      desc: "A partir del análisis integral de las patologías de la vivienda, se desarrolló una propuesta de fachada que contempla no solo la estética, sino también las condiciones constructivas existentes. El diagnóstico previo permitió tomar mejores decisiones, resolver patologías y proyectar una intervención funcional, duradera y coherente con la vivienda.",
     },
     {
-      id: "p03",
-      img: "cocina",
-      name: "Proyecto 03",
-      type: "[TIPO — REMODELACIÓN / COCINA]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
+      code: "Proyecto 03",
+      name: "Propuesta de intervención integral de departamento",
+      img: "departamento",
+      desc: "Se desarrolló una propuesta integral de remodelación de la vivienda, contemplando renovación de pisos, carpinterías, baños y cocina, artefactos sanitarios y equipamiento. Se definió una línea estética integral, con selección de pisos, revestimientos, materiales, colores, texturas, iluminación, mobiliario, griferías, sanitarios, mesadas, herrajes, textiles y elementos decorativos. El objetivo fue lograr espacios funcionales, armónicos y coherentes, donde cada elección de material, color y terminación responda a un concepto general de diseño.",
     },
     {
-      id: "p04",
-      img: "ampliacion",
-      name: "Proyecto 04",
-      type: "[TIPO — AMPLIACIÓN]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
-      wide: true,
+      code: "Proyecto 04",
+      name: "Diagnóstico técnico y plan de intervención de la vivienda",
+      img: "diagnostico",
+      imgs: ["diagnostico-doc"],
+      desc: "Un informe de patologías no es solo detectar humedades, fisuras o problemas constructivos. Es entender su origen, evaluar su alcance y definir cómo intervenir correctamente. Este tipo de relevamiento permite al propietario contar con una mirada profesional sobre el estado de su vivienda, planificar las reparaciones y tener criterios claros para solicitar presupuestos y controlar la ejecución de los trabajos. Diagnosticar antes de intervenir es la clave para evitar soluciones improvisadas y reparaciones que solo resuelven el problema de manera superficial.",
     },
     {
-      id: "p05",
-      img: "bano",
-      name: "Proyecto 05",
-      type: "[TIPO — BAÑO / REDISEÑO]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
+      code: "Proyecto 05",
+      name: "Ampliación + remodelación de fachada",
+      img: "ampliacion-fachada",
+      desc: "El cliente tenía una idea definida para la ampliación, pero buscaba una mirada profesional que permitiera resolverla de la manera más conveniente, considerando las características y condiciones existentes de la vivienda. A partir del análisis del proyecto, se desarrollaron diferentes alternativas de ampliación y diseño de fachada, evaluando volumetría, proporciones, materiales, accesos y relación con la construcción existente. El objetivo fue explorar las distintas posibilidades que la vivienda permitía, para encontrar una solución funcional, estética y coherente con la arquitectura existente.",
     },
     {
-      id: "p06",
-      img: "patio",
-      name: "Proyecto 06",
-      type: "[TIPO — PATIO / EXTERIOR]",
-      year: "[AÑO]",
-      desc: "[Descripción breve del proyecto — reemplazá con texto real.]",
+      code: "Proyecto 06",
+      name: "Intervención y ampliación de dormitorio",
+      img: "dormitorio",
+      desc: "Aprovechando el balcón existente de la vivienda, se planteó una intervención que permitió resolver problemas de humedad provenientes de este sector y, al mismo tiempo, mejorar la funcionalidad del espacio. La ampliación incorpora un sector de lectura y escritorio, junto con un gimnasio personal, generando un ambiente más cómodo, versátil y adaptado a las necesidades de sus habitantes.",
     },
   ],
 
-  /* ---------- Sobre la arquitecta ---------- */
+  /* ---------- 16. SOBRE VALERIA ---------- */
   about: {
     eyebrow: "Sobre Valeria",
     title: "Arquitectura con atención a las personas",
-    para: "Te explica claro, sin tecnicismos, y te acompaña en cada paso.",
+    para: "Te explico claro, sin tecnicismos, y te acompaño en cada paso.",
     how: [
       { n: "01", t: "Te escucho", d: "Qué necesitás y cómo vivís." },
-      { n: "02", t: "Analizo", d: "Voy a la casa y la entiendo." },
+      { n: "02", t: "Analizo", d: "Veo la casa y la entiendo." },
       { n: "03", t: "Te propongo", d: "Opciones con costos y tiempos." },
       { n: "04", t: "Te acompaño", d: "De la idea a la obra." },
     ],
   },
 
-  /* ---------- Instagram ---------- */
+  /* ---------- 17. INSTAGRAM ---------- */
   instagram: {
     eyebrow: "Instagram",
     title: "Conocé más proyectos e ideas",
-    lead: "Trabajos en curso e ideas en @arqvaleriamartin.",
-    cta: "Seguir en Instagram",
+    text: "Trabajos en curso e ideas en @argvaleriamartin.",
+    cta: "Ver en Instagram →",
+    img: "vivienda",
   },
 
-  /* ---------- Contacto final ---------- */
+  /* ---------- 18. CTA FINAL ---------- */
   finalCta: {
     title: "Idea, consulta o problema: hablemos de tu casa",
-    lead: "Contanos qué te pasa y te respondemos a la brevedad.",
-    primary: "Hablar por WhatsApp",
-    secondary: "Ver en Instagram",
+    text: "Contanos qué te pasa y te respondemos a la brevedad.",
+    wa: "Hablar por WhatsApp →",
+    ig: "Ver en Instagram",
   },
 
-  /* ---------- Pie de página ---------- */
+  /* ---------- Formulario de consulta ---------- */
+  form: {
+    eyebrow: "Contanos qué te pasa",
+    title: "Completá tu consulta",
+    intro: "Armamos el mensaje por WhatsApp para tu caso. Elegí los archivos que quieras compartir y completá el resto; en WhatsApp los adjuntás en el chat.",
+    topicLabel: "Tu tema",
+    defaultTopic: "Consulta general",
+    customToggle: "O escribir otro tema",
+    customPlaceholder: "¿Qué te pasa?",
+    filesLabel: "Adjuntá fotos, videos, planos o medidas",
+    filesBtn: "Elegir archivos",
+    filesHint: "Se listan acá y los pasás cuando se abre WhatsApp.",
+    filesCount: "archivo(s)",
+    msgLabel: "Contanos en unas líneas qué te pasa",
+    msgPlaceholder: "Ej.: el techo del dormitorio se humedece cuando llueve…",
+    nameLabel: "Tu nombre",
+    namePlaceholder: "Cómo podemos llamarte",
+    submit: "Enviar por WhatsApp",
+    note: "Al abrir WhatsApp, adjuntá ahí los archivos que elegiste.",
+    feedbackNoNumber: "Todavía no hay número de WhatsApp configurado. Editalo en js/config.js.",
+  },
+
+  /* ---------- 19. FOOTER ---------- */
   footer: {
+    name: "Valeria Martín",
+    tagline: "Valeria Martín · Arquitectura — casas que funcionan bien",
     navTitle: "Navegación",
     nav: [
       { label: "Inicio", href: "#inicio" },
-      { label: "Quiero mejorar mi casa", href: "#mejorar-casa" },
-      { label: "Servicios", href: "#servicios" },
+      { label: "Mi casa tiene un problema", href: "#mejorar-casa" },
       { label: "Proyectos", href: "#proyectos" },
       { label: "Sobre Valeria", href: "#sobre-mi" },
       { label: "Contacto", href: "#contacto" },

@@ -1,8 +1,11 @@
 /* ============================================================
-   VALEMANA · VALERIA MARTÍN — INTERACCIÓN
+   VALEMANA · VAM ARQUITECTURA — INTERACCIÓN
    ------------------------------------------------------------
    No tocar esta lógica salvo para agregar funcionalidad.
    Todo el contenido editable vive en js/content.js y js/config.js.
+   Las imágenes se leen de assets/images/<nombre>.jpg según la
+   clave definida en js/config.js. Si el archivo no existe
+   todavía, se muestra un recuadro con el nombre esperado.
    ============================================================ */
 
 (function () {
@@ -10,6 +13,7 @@
 
   var CONFIG = window.SITE_CONFIG || {};
   var DATA = window.SITE_CONTENT || {};
+  var IMG_DIR = "assets/images/";
 
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function (sel, ctx) {
@@ -23,9 +27,81 @@
     }, obj);
   }
 
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function fileName(name) {
+    name = String(name || "");
+    return name.indexOf(".") > -1 ? name : name + ".jpg";
+  }
+
+  function pad(num) {
+    num = String(num);
+    return num.length < 2 ? "0" + num : num;
+  }
+
   function waHref(text) {
-    var num = CONFIG.whatsapp && CONFIG.whatsapp.number ? CONFIG.whatsapp.number : "";
+    var num = (CONFIG.whatsapp && CONFIG.whatsapp.number) || "";
     return "https://wa.me/" + num + "?text=" + encodeURIComponent(text || "");
+  }
+
+  /* ---------- Imagen con slot de respaldo ---------- */
+
+  function media(name, alt) {
+    var file = fileName(name);
+    return (
+      '<span class="media">' +
+        '<img src="' + IMG_DIR + file + '" alt="' + esc(alt) + '" loading="lazy" data-file="' + esc(file) + '">' +
+        '<span class="img-slot" aria-hidden="true">' +
+          '<span class="img-slot__mark">✳</span>' +
+          '<span class="img-slot__name">' + esc(file) + "</span>" +
+        "</span>" +
+      "</span>"
+    );
+  }
+
+  function markMissing(img) {
+    if (img.id === "heroImg") {
+      var hero = $("#inicio");
+      if (hero) hero.classList.add("is-plain");
+      img.style.display = "none";
+      return;
+    }
+    var wrap = img.parentNode;
+    if (wrap && wrap.classList && wrap.classList.contains("media")) {
+      wrap.classList.add("is-missing");
+    } else if (wrap) {
+      var slot = document.createElement("span");
+      slot.className = "img-slot img-slot--block";
+      slot.innerHTML =
+        '<span class="img-slot__mark" aria-hidden="true">✳</span>' +
+        '<span class="img-slot__name">' + esc(fileName(img.getAttribute("data-file") || "")) + "</span>";
+      wrap.replaceChild(slot, img);
+    }
+  }
+
+  function watchImg(img) {
+    var done = false;
+    var onErr = function () {
+      if (done) return;
+      done = true;
+      markMissing(img);
+    };
+    img.addEventListener("error", onErr);
+    if (img.complete && img.naturalWidth === 0 && img.src) onErr();
+  }
+
+  function attachPics(root) {
+    $$("img[data-file]", root || document).forEach(function (img) {
+      if (img.getAttribute("data-bound")) return;
+      img.setAttribute("data-bound", "1");
+      watchImg(img);
+    });
   }
 
   /* ------------------------- BINDEOS DE HTML ------------------------- */
@@ -38,17 +114,9 @@
     });
   }
 
-  function bindMail() {
-    $$("[data-mail]").forEach(function (el) {
-      var val = getPath(CONFIG, el.getAttribute("data-mail"));
-      if (val) el.href = "mailto:" + val;
-    });
-  }
-
   function bindHref() {
     $$("[data-href]").forEach(function (el) {
-      var key = el.getAttribute("data-href");
-      var url = CONFIG.social && CONFIG.social[key];
+      var url = CONFIG.social && CONFIG.social[el.getAttribute("data-href")];
       if (url) {
         el.href = url;
         el.target = "_blank";
@@ -58,48 +126,30 @@
   }
 
   function bindPic() {
-    $$("[data-pic]").forEach(function (el) {
-      var key = el.getAttribute("data-pic");
-      var src = CONFIG.images && CONFIG.images[key];
-      if (!src) {
-        if (el.tagName === "IMG") {
-          el.remove();
-        } else {
-          el.classList.add("p-slot");
-        }
-        return;
-      }
-      if (el.tagName === "IMG") {
-        el.src = src;
-      } else {
-        var mark = $(".p-slot__mark", el);
-        if (mark) mark.remove();
-        el.classList.remove("p-slot");
-        el.style.backgroundImage = "url('" + src + "')";
-      }
+    $$("[data-pic]").forEach(function (img) {
+      var key = img.getAttribute("data-pic");
+      var name = (CONFIG.images && CONFIG.images[key]) || key;
+      var file = fileName(name);
+      img.setAttribute("data-file", file);
+      watchImg(img);
+      img.src = IMG_DIR + file;
     });
-    if (!$("#heroImg")) {
-      var hero = $("#inicio");
-      if (hero) hero.classList.add("is-plain");
-    }
   }
 
   function bindWhatsApp() {
+    var num = CONFIG.whatsapp && CONFIG.whatsapp.number;
     $$("[data-wa]").forEach(function (el) {
-      var key = el.getAttribute("data-wa");
-      var msg = DATA.wa && DATA.wa[key];
-      var num = CONFIG.whatsapp && CONFIG.whatsapp.number;
+      var msg = DATA.wa && DATA.wa[el.getAttribute("data-wa")];
       if (!num) {
         el.classList.add("is-disabled");
         el.setAttribute("aria-disabled", "true");
         el.setAttribute("tabindex", "-1");
-        if ($("html")) $("html").classList.remove("wa-ready");
         return;
       }
-      if (msg) el.href = waHref(msg);
+      $("html").classList.add("wa-ready");
+      el.href = waHref(msg);
       el.setAttribute("target", "_blank");
       el.setAttribute("rel", "noopener");
-      if ($("html")) $("html").classList.add("wa-ready");
     });
   }
 
@@ -108,31 +158,69 @@
   function renderMarquee() {
     var host = $("#rad-marquee");
     if (!host) return;
-    var items = DATA.marquee || [];
     var html = "";
     for (var r = 0; r < 2; r++) {
-      items.forEach(function (t) {
-        html += '<span class="marquee__item">' + t + '</span><span class="marquee__dot" aria-hidden="true">·</span>';
+      (DATA.marquee || []).forEach(function (t) {
+        html += '<span class="marquee__item">' + esc(t) + "</span>" +
+          '<span class="marquee__dot" aria-hidden="true">·</span>';
       });
     }
     host.innerHTML = html;
   }
 
-  /* --------------------- QUIERO MEJORAR MI CASA ---------------------- */
+  /* --------------------------- ACCESOS HERO --------------------------- */
+
+  function renderAccesos() {
+    var host = $("#rad-accesos");
+    if (!host) return;
+    host.innerHTML = ((DATA.queNecesita && DATA.queNecesita.items) || [])
+      .map(function (it) {
+        return (
+          '<a class="acceso" href="' + esc(it.href || "#consulta-online") + '">' +
+            '<span class="acceso__media">' + media(it.img, it.situation) + "</span>" +
+            '<span class="acceso__body">' +
+              '<span class="acceso__title">' + esc(it.situation) + "</span>" +
+              '<span class="acceso__desc">' + esc(it.solution) + "</span>" +
+            "</span>" +
+          "</a>"
+        );
+      })
+      .join("");
+  }
+
+  /* ------------------------- FRANJA DE SERVICIOS ------------------------- */
+
+  function renderSvcRail() {
+    var host = $("#rad-svcrail");
+    if (!host) return;
+    host.innerHTML = (DATA.services || [])
+      .map(function (s) {
+        return (
+          '<a href="' + esc(s.anchor) + '">' +
+            "<span>" + esc(s.num) + "</span>" +
+            esc(s.title) +
+          "</a>"
+        );
+      })
+      .join("");
+  }
+
+  /* ------------------------ MI CASA TIENE UN PROBLEMA ------------------------ */
 
   function renderNeeds() {
     var host = $("#rad-needs");
     if (!host) return;
     host.innerHTML = (DATA.needs || [])
       .map(function (n, i) {
-        var index = String(i + 1).padStart(2, "0");
+        var index = pad(i + 1);
+        var cls = "need" + (n.wide ? " need--wide" : "");
         return (
-          '<li class="need' + (n.wide ? " need--wide" : "") + '" id="need-' + n.id + '">' +
-            '<button type="button" class="need__link" data-need-id="' + n.id + '">' +
-              '<span class="need__index">' + index + "</span>" +
-              "<span class=\"need__body\">" +
-                '<span class="need__title">' + n.title + "</span>" +
-                (n.desc ? '<span class="need__desc">' + n.desc + "</span>" : "") +
+          '<li class="' + cls + '" id="need-' + esc(n.id) + '">' +
+            '<button type="button" class="need__link" data-need-id="' + esc(n.id) + '">' +
+              '<span class="need__index">' + esc(index) + "</span>" +
+              '<span class="need__body">' +
+                '<span class="need__title">' + esc(n.title) + "</span>" +
+                (n.desc ? '<span class="need__desc">' + esc(n.desc) + "</span>" : "") +
               "</span>" +
               '<span class="need__arr" aria-hidden="true">→</span>' +
             "</button>" +
@@ -149,19 +237,183 @@
     grid.addEventListener("click", function (e) {
       var btn = e.target.closest ? e.target.closest("[data-need-id]") : null;
       if (!btn) return;
-      var need = (DATA.needs || []).filter(function (n) { return n.id === btn.getAttribute("data-need-id"); })[0];
-      if (topicEl) topicEl.textContent = need ? need.title : DATA.form.defaultTopic;
+      var need = (DATA.needs || []).filter(function (n) {
+        return n.id === btn.getAttribute("data-need-id");
+      })[0];
+      if (topicEl) topicEl.textContent = need ? need.title : (DATA.form || {}).defaultTopic;
       var ct = $("#customTopic");
       var ctl = $("#customToggle");
       if (ct) { ct.hidden = true; ct.value = ""; }
       if (ctl) { ctl.setAttribute("aria-expanded", "false"); ctl.classList.remove("is-in"); }
       if (topicEl) topicEl.classList.remove("is-dim");
       $$(".need", grid).forEach(function (li) { li.classList.remove("need--active"); });
-      var li = document.getElementById("need-" + (need ? need.id : ""));
+      var li = need ? document.getElementById("need-" + need.id) : null;
       if (li) li.classList.add("need--active");
       var consult = document.getElementById("consultar");
       if (consult) consult.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  /* ------------------------------ GALERÍA (7) ------------------------------ */
+
+  function renderGaleria() {
+    var host = $("#rad-galeria");
+    if (!host) return;
+    var slots = ["v1", "a", "b", "c", "v2", "d", "e"];
+    host.innerHTML = (DATA.galeria || [])
+      .map(function (name, i) {
+        var pos = slots[i] || "a";
+        var cls = "galeria7__item galeria7__item--" + pos;
+        return (
+          '<figure class="' + cls + '">' +
+            media(name, "Galería " + (i + 1)) +
+          "</figure>"
+        );
+      })
+      .join("");
+  }
+
+  /* ---------------------------- CONSULTA ONLINE ---------------------------- */
+
+  function renderConsultaOnline() {
+    var co = DATA.consultaOnline || {};
+
+    var steps = $("#rad-steps");
+    if (steps) {
+      steps.innerHTML = (co.steps || [])
+        .map(function (s) {
+          return (
+            "<li>" +
+              '<span class="step__num">' + esc(s.n) + "</span>" +
+              '<span class="step__body"><strong>' + esc(s.t) + "</strong><em>" + esc(s.d) + "</em></span>" +
+            "</li>"
+          );
+        })
+        .join("");
+    }
+
+    var topics = $("#rad-topicos");
+    if (topics) {
+      topics.innerHTML = (co.topics || [])
+        .map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; })
+        .join("");
+    }
+
+    var pics = $("#rad-online-pics");
+    if (pics) {
+      pics.innerHTML = (co.photos || [])
+        .map(function (n) { return '<figure class="online__fig">' + media(n, "Consulta online") + "</figure>"; })
+        .join("");
+    }
+
+    var informe = $("#rad-informe");
+    if (informe && co.informe) {
+      var inf = co.informe;
+      var rows = [inf.field, inf.motivo, inf.verificar, inf.recomendacion, inf.prioridad, inf.proximo];
+      informe.innerHTML = rows
+        .filter(Boolean)
+        .map(function (label) {
+          return '<div class="informe__row"><dt>' + esc(label) + "</dt><dd></dd></div>";
+        })
+        .join("");
+    }
+  }
+
+  /* ---------------------------- REMODELACIONES ---------------------------- */
+
+  function renderRemodel() {
+    var list = $("#rad-consultas");
+    if (list) {
+      list.innerHTML = ((DATA.remodelaciones && DATA.remodelaciones.consultas) || [])
+        .map(function (t) { return "<li>" + esc(t) + "</li>"; })
+        .join("");
+    }
+
+    var host = $("#rad-cards");
+    if (!host) return;
+    host.innerHTML = ((DATA.remodelaciones && DATA.remodelaciones.cards) || [])
+      .map(function (c, i) {
+        var cls = "cmp-card" + (i % 2 ? " cmp-card--accent" : "");
+        var items = (c.items || [])
+          .map(function (item) { return "<li>" + esc(item) + "</li>"; })
+          .join("");
+        return (
+          '<article class="' + cls + '">' +
+            '<h3 class="cmp-card__name">' + esc(c.name) + "</h3>" +
+            '<ul class="cmp-card__list">' + items + "</ul>" +
+          "</article>"
+        );
+      })
+      .join("");
+  }
+
+  /* ------------------------------- INSPIRACIÓN ------------------------------- */
+
+  function renderInspiracion() {
+    var host = $("#rad-inspi");
+    if (!host) return;
+    host.innerHTML = ((DATA.inspiracion && DATA.inspiracion.cases) || [])
+      .map(function (c) {
+        return (
+          '<article class="inspi-card">' +
+            '<div class="inspi-pair">' +
+              '<figure class="inspi-fig">' + media(c.imgA, c.name + " — " + c.labelA) +
+                "<figcaption>" + esc(c.labelA) + "</figcaption></figure>" +
+              '<figure class="inspi-fig">' + media(c.imgB, c.name + " — " + c.labelB) +
+                "<figcaption>" + esc(c.labelB) + "</figcaption></figure>" +
+            "</div>" +
+            '<div class="inspi-body">' +
+              '<h4 class="inspi-name">' + esc(c.name) + "</h4>" +
+              '<p class="inspi-tag">' + esc(c.tag) + "</p>" +
+            "</div>" +
+          "</article>"
+        );
+      })
+      .join("");
+  }
+
+  /* --------------------------- DISEÑO DE INTERIORES --------------------------- */
+
+  function renderInteriores() {
+    var photos = $("#rad-interiores");
+    if (photos) {
+      photos.innerHTML = ((DATA.disenoInteriores && DATA.disenoInteriores.photos) || [])
+        .map(function (n) { return '<figure class="di-fig">' + media(n, "Diseño de interiores") + "</figure>"; })
+        .join("");
+    }
+
+    var topics = $("#rad-topicos-di");
+    if (topics) {
+      topics.innerHTML = ((DATA.disenoInteriores && DATA.disenoInteriores.topics) || [])
+        .map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; })
+        .join("");
+    }
+  }
+
+  /* ------------------------------ BIENESTAR ------------------------------ */
+
+  function renderBienestar() {
+    var concepts = (DATA.bienestar && DATA.bienestar.concepts) || [];
+
+    var pics = $("#rad-confort-pics");
+    if (pics) {
+      pics.innerHTML = concepts
+        .map(function (c) {
+          return '<figure class="conf-fig">' + media(c.img, c.t) + "</figure>";
+        })
+        .join("");
+    }
+
+  }
+
+  /* ------------------------------ COMPRAR ------------------------------ */
+
+  function renderComprar() {
+    var host = $("#rad-checks");
+    if (!host) return;
+    host.innerHTML = ((DATA.comprar && DATA.comprar.checks) || [])
+      .map(function (t) { return "<li>" + esc(t) + "</li>"; })
+      .join("");
   }
 
   /* --------------------------- FORM A WHATSAPP --------------------------- */
@@ -173,37 +425,44 @@
 
     host.innerHTML =
       '<div class="consult__head">' +
-        '<span class="section__eyebrow">' + f.eyebrow + "</span>" +
-        '<h3 class="consult__title">' + f.title + "</h3>" +
-        '<p class="consult__intro">' + f.intro + "</p>" +
+        '<span class="section__eyebrow">' + esc(f.eyebrow) + "</span>" +
+        '<h3 class="consult__title">' + esc(f.title) + "</h3>" +
+        '<p class="consult__intro">' + esc(f.intro) + "</p>" +
       "</div>" +
       '<form class="consult__card" id="consultForm" novalidate>' +
         '<div class="consult__field">' +
-          '<span class="consult__label">' + f.topicLabel + "</span>" +
-          '<strong class="consult__topic" id="consultTopic">' + f.defaultTopic + "</strong>" +
-          '<button type="button" class="custom-toggle" id="customToggle" aria-expanded="false">' + f.customToggle + ' <span aria-hidden="true">↓</span></button>' +
-          '<input type="text" id="customTopic" class="consult__input consult__input--ghost" aria-label="' + f.topicLabel + '" placeholder="' + f.customPlaceholder + '" hidden>' +
+          '<span class="consult__label">' + esc(f.topicLabel) + "</span>" +
+          '<strong class="consult__topic" id="consultTopic">' + esc(f.defaultTopic) + "</strong>" +
+          '<button type="button" class="custom-toggle" id="customToggle" aria-expanded="false">' +
+            esc(f.customToggle) + ' <span aria-hidden="true">↓</span></button>' +
+          '<input type="text" id="customTopic" class="consult__input consult__input--ghost" aria-label="' +
+            esc(f.topicLabel) + '" placeholder="' + esc(f.customPlaceholder) + '" hidden>' +
         "</div>" +
         '<fieldset class="consult__field">' +
-          '<legend class="consult__label">' + f.filesLabel + "</legend>" +
+          '<legend class="consult__label">' + esc(f.filesLabel) + "</legend>" +
           '<div class="file-row">' +
-            '<label class="btn btn--ghost btn--sm" for="consultFiles">+ ' + f.filesBtn + "</label>" +
+            '<label class="btn btn--ghost btn--sm" for="consultFiles">+ ' + esc(f.filesBtn) + "</label>" +
             '<input type="file" id="consultFiles" multiple accept="image/*,video/*,application/pdf,.dwg,.dxf" hidden>' +
-            '<span class="file-hint" id="fileHint">' + f.filesHint + "</span>" +
+            '<span class="file-hint" id="fileHint">' + esc(f.filesHint) + "</span>" +
           "</div>" +
           '<ul class="file-list" id="fileList" hidden></ul>' +
         "</fieldset>" +
         '<div class="consult__field">' +
-          '<label class="consult__label" for="consultMsg">' + f.msgLabel + "</label>" +
-          '<textarea id="consultMsg" name="consulta" rows="4" placeholder="' + f.msgPlaceholder + '"></textarea>' +
+          '<label class="consult__label" for="consultMsg">' + esc(f.msgLabel) + "</label>" +
+          '<textarea id="consultMsg" name="consulta" rows="4" placeholder="' + esc(f.msgPlaceholder) + '"></textarea>' +
         "</div>" +
         '<div class="consult__field">' +
-          '<label class="consult__label" for="consultName">' + f.nameLabel + "</label>" +
-          '<input id="consultName" name="nombre" type="text" maxlength="60" placeholder="' + f.namePlaceholder + '" autocomplete="name">' +
+          '<label class="consult__label" for="consultName">' + esc(f.nameLabel) + "</label>" +
+          '<input id="consultName" name="nombre" type="text" maxlength="60" placeholder="' +
+            esc(f.namePlaceholder) + '" autocomplete="name">' +
         "</div>" +
         '<div class="consult__actions">' +
-          '<button type="submit" class="btn btn--accent btn--lg">' + f.submit + ' <span class="btn__arr" aria-hidden="true">→</span></button>' +
-          '<p class="consult__note">' + f.note + "</p>" +
+          '<div class="consult__send">' +
+            '<button type="submit" class="btn btn--accent btn--lg">' + esc(f.submit) +
+              ' <span class="btn__arr" aria-hidden="true">→</span></button>' +
+            '<div class="response response--form" data-response></div>' +
+          "</div>" +
+          '<p class="consult__note">' + esc(f.note) + "</p>" +
         "</div>" +
         '<p class="consult__feedback" id="consultFeedback" hidden></p>' +
       "</form>";
@@ -231,8 +490,7 @@
         }
       });
       customTopic.addEventListener("input", function () {
-        if (customTopic.value.trim()) consultTopic.classList.add("is-dim");
-        else consultTopic.classList.remove("is-dim");
+        consultTopic.classList.toggle("is-dim", !!customTopic.value.trim());
       });
     }
 
@@ -250,10 +508,11 @@
           .map(function (file, i) {
             var kb = Math.round(file.size / 1024);
             return (
-              '<li>' +
-                "<span class=\"file-list__name\">" + file.name + "</span>" +
-                "<span class=\"file-list__size\">" + kb + " KB</span>" +
-                '<button type="button" class="file-list__remove" data-i="' + i + '" aria-label="Quitar ' + file.name + '">×</button>' +
+              "<li>" +
+                '<span class="file-list__name">' + esc(file.name) + "</span>" +
+                '<span class="file-list__size">' + kb + " KB</span>" +
+                '<button type="button" class="file-list__remove" data-i="' + i +
+                  '" aria-label="Quitar ' + esc(file.name) + '">×</button>' +
               "</li>"
             );
           })
@@ -305,149 +564,16 @@
     });
   }
 
-  /* ------------------------- FRANJA DE SERVICIOS ------------------------- */
+  /* --------------------------- RESPUESTA (bloque repetido) --------------------------- */
 
-  function renderSvcRail() {
-    var host = $("#rad-svcrail");
-    if (!host) return;
-    host.innerHTML = (DATA.services || [])
-      .map(function (s) {
-        return (
-          '<a href="' + s.anchor + '">' +
-            "<span>" + s.num + "</span>" +
-            s.title +
-          "</a>"
-        );
-      })
-      .join("");
-  }
-
-  /* ------------------------------ SERVICIOS ------------------------------ */
-
-  function renderServices() {
-    var host = $("#rad-services");
-    if (!host) return;
-    host.innerHTML = (DATA.services || [])
-      .map(function (s) {
-        return (
-          '<li class="svc" data-service-id="' + s.id + '">' +
-            '<a class="svc__link" href="' + s.anchor + '">' +
-              '<span class="svc__index">' + s.num + "</span>" +
-              '<span class="svc__name">' + s.title + "</span>" +
-              '<span class="svc__arrow" aria-hidden="true">→</span>' +
-            "</a>" +
-            '<p class="svc__desc">' + s.desc + "</p>" +
-          "</li>"
-        );
-      })
-      .join("");
-  }
-
-  /* --------------------------- ASESORAMIENTO ONLINE --------------------------- */
-
-  function renderOnline() {
-    var stepsHost = $("#rad-steps");
-    if (stepsHost) {
-      stepsHost.innerHTML = (DATA.online.steps || [])
-        .map(function (s) {
-          return (
-            "<li>" +
-              '<span class="step__num">' + s.n + "</span>" +
-              '<span class="step__body"><strong>' + s.t + "</strong><em>" + s.d + "</em></span>" +
-            "</li>"
-          );
-        })
-        .join("");
-    }
-
-    var topicsHost = $("#rad-topics");
-    if (topicsHost) {
-      topicsHost.innerHTML = (DATA.online.topics || [])
-        .map(function (t) { return '<span class="chip">' + t + "</span>"; })
-        .join("");
-    }
-
-    var informeHost = $("#rad-informe");
-    if (informeHost) {
-      var inf = DATA.online.informe || {};
-      var rows = [
-        ["field", inf.field],
-        ["motivo", inf.motivo],
-        ["verificar", inf.verificar],
-        ["recomendacion", inf.recomendacion],
-        ["prioridad", inf.prioridad],
-        ["proximo", inf.proximo],
-      ];
-      var vals = ["", "", "", "", "", ""];
-      rows.forEach(function (r, i) {
-        if (!r[1]) return;
-        informeHost.innerHTML +=
-          '<div class="informe__row">' +
-            '<dt>' + r[1] + "</dt>" +
-            '<dd class="is-ph" data-ph="' + r[0] + '">' + vals[i] + "</dd>" +
-          "</div>";
-      });
-    }
-  }
-
-  /* ------------------------------- REMODEL ------------------------------- */
-
-  function renderRemodel() {
-    var ex = $("#rad-examples");
-    if (ex) {
-      ex.innerHTML = (DATA.remodel.examples || [])
-        .map(function (t) { return "<li><span aria-hidden=\"true\">+</span>" + t + "</li>"; })
-        .join("");
-    }
-
-    var cmp = $("#rad-compare");
-    if (cmp) {
-      cmp.innerHTML = (DATA.remodel.compare || [])
-        .map(function (c) {
-          var items = (c.items || []).map(function (i) { return "<li>" + i + "</li>"; }).join("");
-          return (
-            '<div class="cmp-card cmp-card--' + (c.n === "02" ? "accent" : "plain") + '">' +
-              '<span class="cmp-card__num">' + c.n + "</span>" +
-              '<h3 class="cmp-card__name">' + c.name + "</h3>" +
-              '<p class="cmp-card__desc">' + c.desc + "</p>" +
-              '<ul class="cmp-card__list">' + items + "</ul>" +
-            "</div>"
-          );
-        })
-        .join("");
-    }
-  }
-
-  /* ------------------------------- INTERIORES ------------------------------- */
-
-  function renderInteriors() {
-    var host = $("#rad-chips");
-    if (!host) return;
-    host.innerHTML = (DATA.interiors.chips || [])
-      .map(function (t) { return '<span class="chip">' + t + "</span>"; })
-      .join("");
-  }
-
-  /* ------------------------------- BIENESTAR ------------------------------- */
-
-  function renderWellness() {
-    var host = $("#rad-concepts");
-    if (!host) return;
-    host.innerHTML = (DATA.wellness.concepts || [])
-      .map(function (c) {
-        return "<li><strong>" + c.t + "</strong><span>" + c.d + "</span></li>";
-      })
-      .join("");
-  }
-
-  /* ------------------------------- ANTES DE COMPRAR ------------------------------- */
-
-  function renderPrePurchase() {
-    var host = $("#rad-checks");
-    if (!host) return;
-    host.innerHTML = (DATA.prePurchase.checks || [])
-      .map(function (t) { return '<li><span aria-hidden="true">✓</span>' + t + "</li>"; })
-      .join("");
+  function renderResponse() {
+    var r = DATA.response || {};
+    $$("[data-response]").forEach(function (el) {
+      el.innerHTML =
+        '<p class="response__title">' + esc(r.title) + "</p>" +
+        '<p class="response__text">' + esc(r.text) + "</p>" +
+        (r.time ? '<p class="response__time">' + esc(r.time) + "</p>" : "");
+    });
   }
 
   /* ------------------------------- PROYECTOS ------------------------------- */
@@ -455,20 +581,22 @@
   function renderProjects() {
     var host = $("#rad-projects");
     if (!host) return;
-    var pics = CONFIG.images || {};
-    host.innerHTML = (DATA.projectPlaceholders || [])
+    host.innerHTML = (DATA.projectsList || [])
       .map(function (p) {
-        var img = pics[p.img] || "";
-        var media = img
-          ? '<img src="' + img + '" alt="' + p.name + '" loading="lazy">'
-          : '<span class="p-slot__mark" aria-hidden="true">✳</span>';
+        var extras = (p.imgs || [])
+          .map(function (n) { return '<figure class="p-card__extra">' + media(n, p.name) + "</figure>"; })
+          .join("");
+        var extrasRow = extras ? '<div class="p-card__extras">' + extras + "</div>" : "";
+        var meta = p.type ? '<p class="p-card__meta">' + esc(p.type) + "</p>" : "";
         return (
-          '<article class="p-card' + (p.wide ? " p-card--wide" : "") + '">' +
-            '<figure class="p-card__media' + (img ? "" : " p-slot") + '">' + media + "</figure>" +
+          '<article class="p-card">' +
+            '<figure class="p-card__media">' + media(p.img, p.name) + "</figure>" +
             '<div class="p-card__body">' +
-              '<h3 class="p-card__name">' + p.name + "</h3>" +
-              '<p class="p-card__meta">' + p.type + " · " + p.year + "</p>" +
-              '<p class="p-card__desc">' + p.desc + "</p>" +
+              '<p class="p-card__code">' + esc(p.code) + "</p>" +
+              '<h3 class="p-card__name">' + esc(p.name) + "</h3>" +
+              meta +
+              '<p class="p-card__desc">' + esc(p.desc) + "</p>" +
+              extrasRow +
             "</div>" +
           "</article>"
         );
@@ -481,9 +609,15 @@
   function renderAbout() {
     var host = $("#rad-how");
     if (!host) return;
-    host.innerHTML = (DATA.about.how || [])
+    host.innerHTML = ((DATA.about && DATA.about.how) || [])
       .map(function (h) {
-        return "<li><span>" + h.n + "</span><strong>" + h.t + "</strong><em>" + h.d + "</em></li>";
+        return (
+          "<li>" +
+            "<span>" + esc(h.n) + "</span>" +
+            "<strong>" + esc(h.t) + "</strong>" +
+            "<em>" + esc(h.d) + "</em>" +
+          "</li>"
+        );
       })
       .join("");
   }
@@ -493,8 +627,10 @@
   function renderFooterNav() {
     var host = $("#rad-footer-nav");
     if (!host) return;
-    host.innerHTML = (DATA.footer.nav || [])
-      .map(function (n) { return '<li><a href="' + n.href + '">' + n.label + "</a></li>"; })
+    host.innerHTML = ((DATA.footer && DATA.footer.nav) || [])
+      .map(function (n) {
+        return '<li><a href="' + esc(n.href) + '">' + esc(n.label) + "</a></li>";
+      })
       .join("");
   }
 
@@ -508,9 +644,10 @@
   function setupReveal() {
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var targets = $$(
-      ".section__head, .hero__inner, .needs-grid, .svc-list, .consult, .online__steps, " +
-      ".online__tools, .remodel__examples, .cmp-grid, .mood-grid, .concept-grid, " +
-      ".wellness-quote, .pre__row, .projects-grid, .about, .final__actions"
+      ".section__head, .hero__inner, .accesos, .hero__band, " +
+      ".online__steps, .tools, .recibe, .online__cta, .consult, .consultas, .what-block, " +
+      ".cmp-grid, .inspi-grid, .di-row, .conf-photos, .pre__row, .projects-grid, .about, " +
+      ".ig, .final__actions, .response, .deliver, .needs-grid, .galeria7, .online__photos"
     );
     targets.forEach(function (el) { el.classList.add("r"); });
 
@@ -532,7 +669,7 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
-  /* ------------------------------- HEADER ------------------------------- */
+  /* ------------------------------- HEADER / MENÚ ------------------------------- */
 
   function setupHeader() {
     var header = $("#siteHeader");
@@ -554,11 +691,11 @@
       overlay.hidden = !open;
       toggle.setAttribute("aria-expanded", String(open));
       document.body.classList.toggle("no-scroll", open);
-      if (open) close.focus();
+      if (open && close) close.focus();
     }
 
     toggle.addEventListener("click", function () { setOpen(true); });
-    close.addEventListener("click", function () { setOpen(false); });
+    if (close) close.addEventListener("click", function () { setOpen(false); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") setOpen(false);
     });
@@ -594,21 +731,22 @@
 
   function init() {
     renderMarquee();
-    renderNeeds();
-    renderServices();
     renderSvcRail();
-    renderOnline();
+    renderAccesos();
+    renderNeeds();
+    renderGaleria();
+    renderConsultaOnline();
     renderRemodel();
-    renderInteriors();
-    renderWellness();
-    renderPrePurchase();
+    renderInspiracion();
+    renderInteriores();
+    renderBienestar();
+    renderComprar();
     renderProjects();
     renderAbout();
     renderFooterNav();
     renderFooterYear();
 
     bindText();
-    bindMail();
     bindHref();
     bindPic();
     bindWhatsApp();
@@ -616,6 +754,9 @@
     renderForm();
     setupForm();
     setupNeedPicker();
+    renderResponse();
+
+    attachPics(document);
 
     setupReveal();
     setupHeader();
