@@ -41,6 +41,14 @@
 *::before,
 *::after { box-sizing: border-box; }
 
+/* La página nunca se desplaza en horizontal: el ancho queda bloqueado */
+html,
+body { overflow-x: clip; }
+@supports not (overflow: clip) {
+  html,
+  body { overflow-x: hidden; }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
@@ -2272,58 +2280,85 @@ a.is-disabled {
 .inspi-fig .media { cursor: zoom-in; }
 
 /* ----------------------------- Responsive -----------------------------
-   En todos los tamaños se conserva la misma estructura que en escritorio:
-   mismas columnas y posición de los elementos. Los grids se encogen con
-   minmax(0, 1fr); solo se escala tipografía, espaciado y alturas. */
+   En pantallas chicas las grillas se adaptan para quedar ordenadas y
+   legibles, sin desborde horizontal. */
 @media (max-width: 1240px) {
-  .hero__inner { max-width: 960px; }
+  .conf-photos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 1060px) {
-  .nav { gap: 16px; }
-  .nav__links ul { gap: 16px; }
-  .nav__links a { font-size: 13px; }
+  .nav__links { display: none; }
+  .menu-toggle { display: flex; }
   .brand { font-size: 20px; }
-  .nav__cta { padding-right: 14px; padding-left: 14px; }
+  .nav { gap: 18px; }
+  .hero__inner { max-width: 920px; }
 }
 
 @media (max-width: 960px) {
+  .online__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .online__steps li:nth-child(n + 4) { border-top: 0; }
+
+  .di-row { grid-template-columns: 1fr; }
+  .inspi-grid { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 1fr; gap: 28px; }
+  .about__figure { margin: 0 auto; max-width: 460px; }
+  .ig { grid-template-columns: 1fr; gap: 28px; }
+  .inspi-cta__pair { grid-template-columns: 1fr; align-items: start; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  .pre__row { grid-template-columns: 1fr minmax(240px, 320px); }
   .hero__band .media-frame { min-height: 320px; }
 }
 
 @media (max-width: 840px) {
-  .nav { gap: 12px; }
-  .nav__links ul { gap: 12px; }
-  .nav__links a { font-size: 12.5px; }
-  .brand { font-size: 18px; }
-  .brand__logo { width: 30px; height: 30px; }
-  .about { grid-template-columns: minmax(0, 420px) 1fr; gap: 32px; }
-  .pre__row { grid-template-columns: 1fr minmax(200px, 300px); }
-  .hero__inner { gap: 28px; }
+  .cmp-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .online__cta { grid-template-columns: 1fr; }
+  .pre__row { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {
   html { scroll-padding-top: 64px; }
   .nav { height: 60px; gap: 14px; }
 
-  .hero__inner { padding: 100px 0 0; column-gap: clamp(16px, 6vw, 30px); }
+  .hero__inner {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    padding: 96px 0 0;
+    gap: 26px;
+  }
+  .hero__how { grid-column: auto; grid-row: auto; }
+  .hero__eyebrow { margin: 4px 0 12px; }
   .hero__title { font-size: clamp(30px, 9vw, 78px); }
+  .hero__lines { margin-top: 16px; }
 
-  .accesos { gap: 12px; }
-  .need__link { gap: 10px; }
+  .accesos { grid-template-columns: 1fr; gap: 12px; }
 
-  .pre__row { grid-template-columns: 1fr; }
+  .needs-grid { grid-template-columns: 1fr; }
+  .need { grid-column: auto !important; }
+
+  .galeria7 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .galeria7__item {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    aspect-ratio: 4 / 3;
+  }
+
+  .conf-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+  .inspi-grid { gap: 22px; }
+  .inspi-pair { gap: 8px; padding: 8px; }
+
+  .online__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .online__steps li { min-height: 130px; padding: 18px 14px; gap: 10px; }
+  .online__steps li:last-child { grid-column: 1 / -1; }
+
   .pre__checks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pre__checks li { padding: 16px 14px; }
   .pre__side { justify-items: start; }
 
-  .online__steps li { padding: 18px 12px; gap: 10px; min-height: 120px; }
-  .conf-photos { gap: 12px; }
-  .inspi-grid { gap: 20px; }
-  .inspi-pair { gap: 10px; padding: 8px; }
-  .di-row { gap: 20px; }
-  .ig { gap: 24px; }
-  .footer__grid { gap: 24px; }
-  .footer__bottom { flex-wrap: wrap; justify-content: flex-start; gap: 12px; }
+  .di-row { gap: 22px; }
+  .di-fig .media { height: auto; aspect-ratio: 4 / 3; }
 
   .btn { white-space: normal; }
   .pro-card { max-width: 100%; }
@@ -2331,19 +2366,14 @@ a.is-disabled {
   .consult__card { padding-inline: 20px; }
   .consult__head { padding-inline: 20px; }
 
+  .footer__grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer__bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+
   .hero__band .media-frame--wide img,
   .hero__band .media-frame--wide .media { min-height: 340px; }
 
   .wa-float { width: 56px; padding: 0; justify-content: center; }
   .wa-float__label { display: none; }
-}
-
-@media (max-width: 600px) {
-  /* El header mantiene todos los elementos en línea; si no entran,
-     se desliza horizontalmente sin romper el layout del nav */
-  .site-header { overflow-x: auto; scrollbar-width: none; }
-  .site-header::-webkit-scrollbar { display: none; }
-  .nav { width: max-content; min-width: 100%; height: 56px; gap: 14px; }
 }
 
 @media (max-width: 560px) {
@@ -2356,12 +2386,16 @@ a.is-disabled {
 
   .consult__topic,
   .consult__input--ghost { max-width: 100%; }
+
+  .online__photos { max-width: none; }
+  .p-card__extras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .final__actions .btn { width: 100%; }
 }
 
 @media (max-width: 420px) {
-  .brand { font-size: 17px; }
-  .brand__logo { width: 26px; height: 26px; }
-  .nav { gap: 16px; }
+  .brand { font-size: 18px; }
+  .brand__logo { width: 28px; height: 28px; }
+  .nav { gap: 12px; }
 }
 
 /* ----------------------------- Reducir movimiento ----------------------------- */
