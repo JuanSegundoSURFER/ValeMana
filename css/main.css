@@ -49,6 +49,11 @@ body { overflow-x: clip; }
   body { overflow-x: hidden; }
 }
 
+/* Red de seguridad: ningún contenedor grande puede empujar al documento */
+main,
+.site-header,
+footer { overflow-x: clip; }
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
