@@ -276,9 +276,9 @@ window.SITE_CONTENT = {
 
   /* ---------- 11 y 12. DISEÑO DE INTERIORES (bloque oscuro) ---------- */
   disenoInteriores: {
-    eyebrow: "Diseño de interiores",
+    eyebrow: "Quiero mejorar un ambiente",
     title: "Tu casa, rediseñada con mirada arquitectónica",
-    lead: "Quiero mejorar un ambiente",
+    lead: "Reformar con un diseño que responda a cómo vivís.",
     photos: ["interiores"],
     topicsLabel: "De qué podemos hablar",
     topics: [
