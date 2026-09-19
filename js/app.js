@@ -284,7 +284,9 @@
     var host = $("#rad-galeria");
     if (!host) return;
     var slots = ["v1", "a", "b", "c", "v2", "d", "e", "f"];
-    host.innerHTML = (DATA.galeria || [])
+    var images = DATA.galeria || [];
+    host.className = "galeria7 galeria7--" + images.length;
+    host.innerHTML = images
       .map(function (name, i) {
         var pos = slots[i] || "a";
         var cls = "galeria7__item galeria7__item--" + pos;
@@ -624,7 +626,10 @@
     host.innerHTML = (DATA.projectsList || [])
       .map(function (p) {
         var extras = (p.imgs || [])
-          .map(function (n) { return '<figure class="p-card__extra">' + media(n, p.name) + "</figure>"; })
+          .map(function (n, i) {
+            var cls = i >= 3 ? " p-card__extra--mobile" : "";
+            return '<figure class="p-card__extra' + cls + '">' + media(n, p.name) + "</figure>";
+          })
           .join("");
         var extrasRow = extras ? '<div class="p-card__extras">' + extras + "</div>" : "";
         var meta = p.type ? '<p class="p-card__meta">' + esc(p.type) + "</p>" : "";

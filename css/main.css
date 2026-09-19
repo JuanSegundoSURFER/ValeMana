@@ -547,6 +547,8 @@ a.is-disabled {
   max-width: min(560px, 100%);
   margin: clamp(14px, 2.5vw, 28px);
   padding: clamp(14px, 2vw, 22px);
+  background: rgba(8, 6, 5, 0.62);
+  border-radius: 6px;
   color: #fff;
 }
 
@@ -807,6 +809,10 @@ a.is-disabled {
 .galeria7__item--d,
 .galeria7__item--e,
 .galeria7__item--f { aspect-ratio: 4 / 3; }
+
+/* Con 4 imágenes: una fila pareja de cuadrados */
+.galeria7--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: auto; }
+.galeria7--4 .galeria7__item { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 3; }
 
 /* ----------------------------- ¿Esto es para mí? ----------------------------- */
 .what-block {
@@ -1850,6 +1856,7 @@ a.is-disabled {
 
 .p-card__extra { margin: 0; }
 .p-card__extra .media { aspect-ratio: 4 / 3; }
+.p-card__extra--mobile { display: none; }
 
 .p-card__items {
   display: flex;
@@ -2394,6 +2401,7 @@ a.is-disabled {
 
   .online__photos { max-width: none; }
   .p-card__extras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p-card__extra--mobile { display: block; }
   .final__actions .btn { width: 100%; }
 }
 

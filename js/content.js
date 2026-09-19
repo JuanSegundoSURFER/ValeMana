@@ -92,7 +92,7 @@ window.SITE_CONTENT = {
   ],
 
   /* ---------- Galería de 7 imágenes de la sección ---------- */
-  galeria: ["galeria-1", "galeria-2", "galeria-3", "galeria-4", "galeria-5", "galeria-6", "galeria-7", "galeria-8"],
+  galeria: ["galeria-1", "galeria-2", "galeria-3", "galeria-4"],
 
   /* ---------- 5. ¿QUÉ NECESITA TU CASA? ---------- */
   queNecesita: {
@@ -142,7 +142,7 @@ window.SITE_CONTENT = {
       },
       {
         num: "06",
-        situation: "Consulta online",
+        situation: "No sé qué necesito, pero quiero mejorar mi casa",
         solution: "No sé qué necesita mi casa y quiero una mirada profesional.",
         href: "#consulta-online",
         img: "nose",
@@ -346,7 +346,7 @@ window.SITE_CONTENT = {
       code: "Proyecto 02",
       name: "Transformación + ampliación de fachada",
       img: "fachada-transformacion",
-      imgs: ["fachada-transformacion-doc", "fachada-transformacion-antes", "fachada-transformacion-despues"],
+      imgs: ["fachada-transformacion-doc", "fachada-transformacion-antes", "fachada-transformacion-despues", "fachada-transformacion-2"],
       desc: "A partir del análisis integral de las patologías de la vivienda, se desarrolló una propuesta de fachada que contempla no solo la estética, sino también las condiciones constructivas existentes. El diagnóstico previo permitió tomar mejores decisiones, resolver patologías y proyectar una intervención funcional, duradera y coherente con la vivienda.",
     },
     {
