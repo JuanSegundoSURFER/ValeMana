@@ -1442,7 +1442,23 @@ a.is-disabled {
 
 .di-topics .tools__label { margin-bottom: 16px; }
 
-.deliver { margin-top: clamp(36px, 5vw, 56px); }
+.deliver {
+  margin-top: clamp(36px, 5vw, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.deliver .section__cta {
+  margin-top: 0;
+  flex: 1 1 240px;
+}
+
+.deliver .response {
+  margin-top: 0;
+  flex: 1 1 460px;
+}
 
 /* ----------------------------- Respuesta (¿qué pasa cuando me escribís?) ----------------------------- */
 .response {

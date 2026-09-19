@@ -266,8 +266,8 @@ window.SITE_CONTENT = {
         labelA: "Antes", labelB: "Después",
       },
       {
-        name: "",
-        tag: "",
+        name: "Remodelación de cocina",
+        tag: "Cocina propuesta de diseño de cocina",
         imgA: "cocina-antes", imgB: "cocina-despues",
         labelA: "Antes", labelB: "Después",
       },
