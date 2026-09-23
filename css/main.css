@@ -1460,6 +1460,71 @@ a.is-disabled {
   flex: 1 1 460px;
 }
 
+/* ----------------------------- Subhero (páginas internas) ----------------------------- */
+.subhero {
+  padding: clamp(104px, 14vw, 170px) 0 clamp(48px, 7vw, 76px);
+  border-bottom: 1px solid var(--hair);
+}
+
+.subhero__title {
+  margin: 18px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  max-width: 900px;
+}
+
+.subhero__lead {
+  margin: 22px 0 0;
+  max-width: 640px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.subhero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+/* ----------------------------- Página legal ----------------------------- */
+.legal {
+  padding: clamp(48px, 6vw, 88px) 0;
+}
+
+.legal__title {
+  margin: 18px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  max-width: 760px;
+}
+
+.legal h2 {
+  margin: 38px 0 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.legal p {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+
+.legal p:last-child {
+  margin-bottom: 0;
+}
+
 /* ----------------------------- Respuesta (¿qué pasa cuando me escribís?) ----------------------------- */
 .response {
   margin-top: clamp(24px, 3vw, 34px);
@@ -1769,19 +1834,19 @@ a.is-disabled {
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--hair);
-  border: 1px solid var(--hair);
+  gap: clamp(16px, 2.2vw, 24px);
 }
 
 .p-card {
   background: var(--card);
   display: flex;
   flex-direction: column;
-  transition: background-color 0.25s ease;
+  border: 1px solid var(--hair);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.p-card:hover { background: var(--paper-2); }
+.p-card:hover { background: var(--paper-2); border-color: var(--accent); box-shadow: var(--shadow-md); }
 
 .p-card__media { margin: 0; position: relative; cursor: pointer; }
 .p-card__media .media { aspect-ratio: 4 / 3; }
@@ -1844,12 +1909,16 @@ a.is-disabled {
 }
 
 .p-card__code {
-  margin: 0;
+  margin: 0 0 2px;
+  align-self: flex-start;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  padding: 4px 10px 3px;
 }
 
 .p-card__meta {
@@ -2340,7 +2409,6 @@ a.is-disabled {
 
 @media (max-width: 840px) {
   .cmp-grid { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
   .online__cta { grid-template-columns: 1fr; }
   .pre__row { grid-template-columns: 1fr; }
 }
@@ -2360,7 +2428,7 @@ a.is-disabled {
   .hero__title { font-size: clamp(30px, 9vw, 78px); }
   .hero__lines { margin-top: 16px; }
 
-  .accesos { grid-template-columns: 1fr; gap: 12px; }
+  .accesos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 
   .needs-grid { grid-template-columns: 1fr; }
   .need { grid-column: auto !important; }
