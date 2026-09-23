@@ -1808,6 +1808,10 @@ a.is-disabled {
 
 .pre__checks li::before { content: "✓"; color: var(--accent); flex: none; }
 
+@media (min-width: 721px) {
+  .pre__checks li:last-child { grid-column: 1 / -1; }
+}
+
 .pre__side { display: grid; justify-items: start; gap: 18px; }
 
 .media-frame {

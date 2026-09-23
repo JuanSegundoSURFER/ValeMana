@@ -323,6 +323,7 @@ window.SITE_CONTENT = {
       "Posibilidad de remodelar",
       "Problemas que habría que presupuestar",
       "Potencial de transformación",
+      "Analizar terreno antes de comprar",
     ],
     cta: "Pedir una revisión de la propiedad",
   },
