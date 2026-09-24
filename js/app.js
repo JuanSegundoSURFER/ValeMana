@@ -45,9 +45,13 @@
     return num.length < 2 ? "0" + num : num;
   }
 
+  function waTarget() {
+    var w = CONFIG.whatsapp || {};
+    return w.mode === "number" ? (w.number || w.username || "") : (w.username || w.number || "");
+  }
+
   function waHref(text) {
-    var num = (CONFIG.whatsapp && CONFIG.whatsapp.number) || "";
-    return "https://wa.me/" + num + "?text=" + encodeURIComponent(text || "");
+    return "https://wa.me/" + waTarget() + "?text=" + encodeURIComponent(text || "");
   }
 
   /* ---------- Imagen con slot de respaldo ---------- */
@@ -137,7 +141,7 @@
   }
 
   function bindWhatsApp() {
-    var num = CONFIG.whatsapp && CONFIG.whatsapp.number;
+    var num = waTarget();
     $$("[data-wa]").forEach(function (el) {
       var msg = DATA.wa && DATA.wa[el.getAttribute("data-wa")];
       if (!num) {
@@ -592,7 +596,7 @@
       if (name.trim()) parts.push("Me llamo " + name.trim() + ".");
       var text = parts.filter(Boolean).join("\n\n");
 
-      var num = CONFIG.whatsapp && CONFIG.whatsapp.number;
+      var num = waTarget();
       var fb = $("#consultFeedback");
       if (!num) {
         if (fb) {

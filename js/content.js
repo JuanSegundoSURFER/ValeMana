@@ -393,7 +393,7 @@ window.SITE_CONTENT = {
   instagram: {
     eyebrow: "Instagram",
     title: "Conocé más proyectos e ideas",
-    text: "Trabajos en curso e ideas en @argvaleriamartin.",
+    text: "Trabajos en curso e ideas en @arqvaleriamartin.",
     cta: "Ver en Instagram →",
     img: "vivienda",
   },

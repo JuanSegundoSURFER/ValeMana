@@ -16,6 +16,7 @@ window.SITE_CONFIG = {
     monogram: "VAM",
     tagline: "VAM Arquitectura · casas que funcionan bien",
     location: "Córdoba, Argentina · Presencial y online",
+    email: "arqvaleriamartin@gmail.com",
   },
 
   /* ---------- Sitio ---------- */
@@ -27,10 +28,13 @@ window.SITE_CONFIG = {
   },
 
   /* ---------- WhatsApp -------------------------------------------------
-     NÚMERO EN FORMATO INTERNACIONAL SOLO DÍGITOS, con código de país.
-     Ej. 5491100000000  (54 país, 9, 11 código de área, 0000-0000).
-     TODO: reemplazar por el número real antes de publicar.               */
+     Elegí qué destino usan los botones "Hablar por WhatsApp":
+       mode: "username" -> https://wa.me/valeriamartin80
+       mode: "number"   -> https://wa.me/5493513555555
+     NÚMERO EN FORMATO INTERNACIONAL SOLO DÍGITOS: 54 país + 9 + área + número. */
   whatsapp: {
+    mode: "number",
+    username: "valeriamartin80",
     number: "5493513555555",
   },
 
